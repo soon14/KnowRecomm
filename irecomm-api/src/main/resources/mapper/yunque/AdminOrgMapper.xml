@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.yunque.mapper.AdminOrgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.yunque.entity.AdminOrg">
+        <id column="ID" property="id" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="ORG_LEVEL" property="orgLevel" />
+        <result column="ORG_SECRET" property="orgSecret" />
+        <result column="EXTERNAL_NAME" property="externalName" />
+        <result column="ORDER_ID" property="orderId" />
+        <result column="DELETED" property="deleted" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CRT_TIME" property="crtTime" />
+        <result column="CRT_USER" property="crtUser" />
+        <result column="CRT_NAME" property="crtName" />
+        <result column="CRT_HOST" property="crtHost" />
+        <result column="UPD_TIME" property="updTime" />
+        <result column="UPD_USER" property="updUser" />
+        <result column="UPD_NAME" property="updName" />
+        <result column="UPD_HOST" property="updHost" />
+        <result column="ATTR1" property="attr1" />
+        <result column="ATTR2" property="attr2" />
+        <result column="ATTR3" property="attr3" />
+        <result column="ATTR4" property="attr4" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="PATH_CODE" property="pathCode" />
+        <result column="PATH_NAME" property="pathName" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>
