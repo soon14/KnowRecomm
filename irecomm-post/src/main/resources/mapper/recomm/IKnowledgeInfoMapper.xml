@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.recomm.mapper.IKnowledgeInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.recomm.entity.IKnowledgeInfo">
+        <id column="ID" property="id" />
+        <result column="TITLE" property="title" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="AUTHOR" property="author" />
+        <result column="SECURITY_LEVEL" property="securityLevel" />
+        <result column="ABSTRACT_TEXT" property="abstractText" />
+        <result column="ORG" property="org" />
+        <result column="KTYPE" property="ktype" />
+        <result column="TAG_MODEL" property="tagModel" />
+        <result column="KNOWLEDGE_SOURCE" property="knowledgeSource" />
+        <result column="TAG_KEYWORDS" property="tagKeywords" />
+        <result column="TAG_DEVICE" property="tagDevice" />
+        <result column="SOURCE_ID" property="sourceId" />
+        <result column="URL" property="url" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.yunque.mapper.AdminGatelogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.yunque.entity.AdminGatelog">
+        <id column="ID" property="id" />
+        <result column="MENU" property="menu" />
+        <result column="OPT" property="opt" />
+        <result column="URI" property="uri" />
+        <result column="CRT_TIME" property="crtTime" />
+        <result column="CRT_USER" property="crtUser" />
+        <result column="CRT_NAME" property="crtName" />
+        <result column="CRT_HOST" property="crtHost" />
+        <result column="IS_SUCCESS" property="isSuccess" />
+        <result column="P_ID" property="pId" />
+        <result column="LOG_DETAIL" property="logDetail" />
+        <result column="OPT_INFO" property="optInfo" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="PATH_CODE" property="pathCode" />
+        <result column="PATH_NAME" property="pathName" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,40 @@
+eureka:
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://${eureka.instance.hostname}:8800/eureka
+  instance:
+    hostname: localhost
+
+
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: prod
+  application:
+    name: irecomm-tag
+  cloud:
+    config:
+      label: master
+      profile: prod
+      discovery:
+        enabled: true
+        service-id: eureka-config
+
+
+---
+spring:
+  profiles: dev
+  application:
+    name: irecomm-tag
+  cloud:
+    config:
+      label: master  #指定仓库分支
+      profile: dev   #指定版本 本例中建立了dev 和 prod两个版本
+      discovery:
+        enabled: true  # 开启
+        service-id: eureka-config # 指定配置中心服务端的server-id

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.yunque.mapper.AdminUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.yunque.entity.AdminUser">
+        <id column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="P_ID" property="pId" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="SECRET_LEVEL" property="secretLevel" />
+        <result column="GENDER" property="gender" />
+        <result column="ORDER_ID" property="orderId" />
+        <result column="EMP_CODE" property="empCode" />
+        <result column="BIRTH_DATE" property="birthDate" />
+        <result column="O_TEL" property="oTel" />
+        <result column="O_EMAIL" property="oEmail" />
+        <result column="WORK_POST" property="workPost" />
+        <result column="TEC_POST" property="tecPost" />
+        <result column="DELETED" property="deleted" />
+        <result column="REFA" property="refa" />
+        <result column="REFB" property="refb" />
+        <result column="AVATAR" property="avatar" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CRT_TIME" property="crtTime" />
+        <result column="CRT_USER" property="crtUser" />
+        <result column="CRT_NAME" property="crtName" />
+        <result column="CRT_HOST" property="crtHost" />
+        <result column="UPD_TIME" property="updTime" />
+        <result column="UPD_USER" property="updUser" />
+        <result column="UPD_NAME" property="updName" />
+        <result column="UPD_HOST" property="updHost" />
+        <result column="ATTR1" property="attr1" />
+        <result column="ATTR2" property="attr2" />
+        <result column="ATTR3" property="attr3" />
+        <result column="ATTR4" property="attr4" />
+        <result column="PASSWORD" property="password" />
+        <result column="ATTR5" property="attr5" />
+        <result column="ATTR6" property="attr6" />
+        <result column="ATTR7" property="attr7" />
+        <result column="ATTR8" property="attr8" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>

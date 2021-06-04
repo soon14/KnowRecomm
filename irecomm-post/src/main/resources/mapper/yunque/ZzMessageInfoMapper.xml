@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.yunque.mapper.ZzMessageInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.yunque.entity.ZzMessageInfo">
+        <result column="MSG_ID" property="msgId" />
+        <result column="SENDER" property="sender" />
+        <result column="RECEIVER" property="receiver" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="LEVELS" property="levels" />
+        <result column="CONTENT" property="content" />
+        <result column="TYPE" property="type" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="SENDER_SN" property="senderSn" />
+        <result column="ISCROSS" property="iscross" />
+        <result column="IP" property="ip" />
+        <result column="FILE_TYPE" property="fileType" />
+        <result column="MSG" property="msg" />
+        <result column="FILE_ID" property="fileId" />
+        <result column="FRONT_ID" property="frontId" />
+        <result column="SENDER_NAME" property="senderName" />
+        <result column="RECEIVER_NAME" property="receiverName" />
+        <result column="SENDER_AVATAR" property="senderAvatar" />
+        <result column="RECEIVER_AVATAR" property="receiverAvatar" />
+        <result column="SENDER_LEVELS" property="senderLevels" />
+        <result column="CANCEL" property="cancel" />
+        <result column="CANCEL_TIME" property="cancelTime" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.caltks.mapper.DkZhiliangwentianliMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.caltks.entity.DkZhiliangwentianli">
+        <id column="ID" property="id" />
+        <result column="XINGHAOMINGCHENG" property="xinghaomingcheng" />
+        <result column="XINGHAOLEIBIE" property="xinghaoleibie" />
+        <result column="CHANPINDAIHAO" property="chanpindaihao" />
+        <result column="CHANPINBIANHAO" property="chanpinbianhao" />
+        <result column="CHANPINMINGCHENG" property="chanpinmingcheng" />
+        <result column="SUOSHUFENXITONG" property="suoshufenxitong" />
+        <result column="GUZHANGSHIJIAN" property="guzhangshijian" />
+        <result column="GONGZUOJIEDUAN" property="gongzuojieduan" />
+        <result column="GUZHANGGAISHU" property="guzhanggaishu" />
+        <result column="YUANYINFENXI" property="yuanyinfenxi" />
+        <result column="YUANYINFENLEI" property="yuanyinfenlei" />
+        <result column="YUANYINFENLEI2" property="yuanyinfenlei2" />
+        <result column="PICIXINGWENTI" property="picixingwenti" />
+        <result column="JIUZHENGCUOSHI" property="jiuzhengcuoshi" />
+        <result column="WAIXIEGUANLIYUANYIN" property="waixieguanliyuanyin" />
+        <result column="JIAFANGGUANLI" property="jiafangguanli" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>

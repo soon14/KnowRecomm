@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.re.mapper.IreUserFollowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.re.entity.IreUserFollow">
+        <id column="ID_NUM" property="idNum" />
+        <result column="USER_NAME" property="userName" />
+        <result column="POST" property="post" />
+        <result column="USER_JOB" property="userJob" />
+        <result column="FOLLOW_MODEL" property="followModel" />
+        <result column="FOLLOW_DEVICE" property="followDevice" />
+        <result column="FOLLOW_PRO" property="followPro" />
+        <result column="SECRET_LEVEL" property="secretLevel" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="LAST_TIME" property="lastTime" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,66 @@
+server:
+  port: 8701
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8800/eureka
+  instance:
+    hostname: localhost
+
+
+spring:
+  application:
+    name: irecomm-post
+
+# DataSource Config
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.0.50:1521/orcl
+    username: test
+    password: test
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  redis: #redis 配置
+    host: 192.168.0.15 # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+    timeout: 3000ms # 连接超时时间（毫秒）
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+
+
+
+swagger:
+  enable: true
+
+
+job:
+  quartz:
+    trigger:
+      time: 00 */5 * * * ?
+
+
+yunque:
+  url: http://ip:port
+
+#人员筛选，部门，二部
+calc:
+  orgcode: 0010%,0011%
+logging:
+  level:
+    root: info
