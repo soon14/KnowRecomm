@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.k3itech.irecomm.caltks.mapper.MetaKnowledgeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.k3itech.irecomm.caltks.entity.MetaKnowledge">
+        <result column="ID" property="id" />
+        <result column="ABSTRACT_TEXT" property="abstractText" />
+        <result column="SECURITY_LEVEL" property="securityLevel" />
+        <result column="KNOWLEDGE_SOURCE_FILE_PATH" property="knowledgeSourceFilePath" />
+        <result column="KTYPEID" property="ktypeid" />
+        <result column="DOMAIN_NODEID" property="domainNodeid" />
+        <result column="UPLOAD_TIME" property="uploadTime" />
+        <result column="UPLOADERID" property="uploaderid" />
+        <result column="IS_VISIBLE" property="isVisible" />
+        <result column="STATUS" property="status" />
+        <result column="IDENTIFIER" property="identifier" />
+        <result column="FLASH_FILE_PATH" property="flashFilePath" />
+        <result column="TITLE_NAME" property="titleName" />
+        <result column="VERID" property="verid" />
+        <result column="COMMENTRECORDID" property="commentrecordid" />
+        <result column="KNOWLEDGETYPE_ID" property="knowledgetypeId" />
+        <result column="LAST_TIME" property="lastTime" />
+        <result column="ISDEL" property="isdel" />
+    </resultMap>
+
+</mapper>
