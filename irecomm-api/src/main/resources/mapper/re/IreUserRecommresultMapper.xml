@@ -4,9 +4,11 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.k3itech.irecomm.re.entity.IreUserRecommresult">
-        <id column="ID_NUM" property="idNum" />
+        <id column="ID" property="id" />
+        <result column="ID_NUM" property="idNum" />
         <result column="KNOWLEDGE" property="knowledge" />
         <result column="ISLIKE" property="islike" />
+        <result column="UPDATE_TIME" property="updateTime" />
     </resultMap>
 
 </mapper>

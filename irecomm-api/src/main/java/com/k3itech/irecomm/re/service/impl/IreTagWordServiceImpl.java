@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author jobob
- * @since 2021-06-04
+ * @since 2021-06-05
  */
 @Service
 public class IreTagWordServiceImpl extends ServiceImpl<IreTagWordMapper, IreTagWord> implements IIreTagWordService {

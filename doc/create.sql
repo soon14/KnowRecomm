@@ -508,22 +508,26 @@ comment on column IRE_USER_INFO.USER_JOB is '职务'
 
 create table IRE_USER_RECOMMRESULT
 (
-    ID_NUM    VARCHAR2(255) not null
-        constraint I_USER_RESULT_PK
-            primary key,
-    KNOWLEDGE VARCHAR2(255),
-    ISLIKE    NUMBER(1)
+	ID NUMBER not null
+		constraint IRE_USER_RECOMMRESULT_PK
+			primary key,
+	ID_NUM VARCHAR2(255),
+	KNOWLEDGE VARCHAR2(255),
+	ISLIKE VARCHAR2(8),
+	UPDATE_TIME TIMESTAMP(6)
 )
 /
 
-comment on table IRE_USER_RECOMMRESULT is '推荐结果用户喜好度'
+comment on column IRE_USER_RECOMMRESULT.ID_NUM is '用户证件号'
 /
 
 comment on column IRE_USER_RECOMMRESULT.KNOWLEDGE is '知识'
 /
 
-comment on column IRE_USER_RECOMMRESULT.ISLIKE is '0喜欢,-1不喜欢'
+comment on column IRE_USER_RECOMMRESULT.ISLIKE is '用户喜好程度'
 /
+
+
 
 create table ZZ_MESSAGE_INFO
 (
@@ -703,3 +707,20 @@ comment on column IRE_TAG_WORD.WORD is '词语'
 comment on column IRE_TAG_WORD.TAG_TYPE is '词语类型（型号、设备分系统、阶段、领域、军兵种、指标、专业方向等）'
 /
 
+create sequence SEQ_RECOMMRESULT
+    minvalue 1
+    nomaxvalue
+    start with 1
+    increment by 1
+    nocache
+    order;
+/
+
+create sequence SEQ_RECOMMLOG
+    minvalue 1
+    nomaxvalue
+    start with 1
+    increment by 1
+    nocache
+    order;
+/

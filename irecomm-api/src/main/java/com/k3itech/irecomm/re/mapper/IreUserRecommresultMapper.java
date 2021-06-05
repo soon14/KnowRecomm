@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 推荐结果用户喜好度 Mapper 接口
+ *  Mapper 接口
  * </p>
  *
  * @author jobob
- * @since 2021-06-04
+ * @since 2021-06-05
  */
 public interface IreUserRecommresultMapper extends BaseMapper<IreUserRecommresult> {
 

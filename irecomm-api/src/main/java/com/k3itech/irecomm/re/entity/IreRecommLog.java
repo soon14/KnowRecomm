@@ -1,6 +1,8 @@
 package com.k3itech.irecomm.re.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.sql.Timestamp;
@@ -20,6 +22,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@KeySequence(value = "SEQ_RECOMMLOG")
 @TableName("IRE_RECOMM_LOG")
 public class IreRecommLog extends Model<IreRecommLog> {
 

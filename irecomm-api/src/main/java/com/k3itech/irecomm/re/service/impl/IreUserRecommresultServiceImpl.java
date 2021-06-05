@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 推荐结果用户喜好度 服务实现类
+ *  服务实现类
  * </p>
  *
  * @author jobob
- * @since 2021-06-04
+ * @since 2021-06-05
  */
 @Service
 public class IreUserRecommresultServiceImpl extends ServiceImpl<IreUserRecommresultMapper, IreUserRecommresult> implements IIreUserRecommresultService {
