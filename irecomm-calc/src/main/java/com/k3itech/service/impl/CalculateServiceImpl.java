@@ -78,7 +78,7 @@ public class CalculateServiceImpl implements CalculateService {
 
         if (result.size() < RESULTSIZE) {
 
-            result = getDepartResult(iUserFollow);
+//            result = getDepartResult(iUserFollow);
         }
 
         RecommResults recommResults = new RecommResults();

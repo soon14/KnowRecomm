@@ -1,6 +1,7 @@
 package com.k3itech.api.fein;
 
 import com.k3itech.api.fein.YunqueClient;
+import com.k3itech.vo.YunqueContent;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class ServiceFallbackFactory implements FallbackFactory<YunqueClient> {
     public YunqueClient create(Throwable throwable) {
         return new YunqueClient() {
             @Override
-            public Object postMessage(String data) {
+            public Object postMessage(YunqueContent yunqueContent) {
                 log.error("fallback");
                 return "test";
             }

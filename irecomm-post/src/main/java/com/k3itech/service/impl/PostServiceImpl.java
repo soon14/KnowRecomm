@@ -15,6 +15,7 @@ import com.k3itech.utils.ObjectUtils;
 import com.k3itech.vo.RecommContent;
 import com.k3itech.vo.RecommResult;
 import com.k3itech.vo.RecommResults;
+import com.k3itech.vo.YunqueContent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,11 @@ public class PostServiceImpl implements PostService {
     private YunqueClient yunqueClient;
     @Autowired
     private IIreRecommLogService iIreRecommLogService;
+    @Autowired
+    private ServerConfig serverConfig;
+
     @Value("${yunque.url}")
-    private String yunqueurl;
+    private String knowledgeurl;
 
     @Override
     public boolean postKnowledge(IreUserFollow iUserFollow) {
@@ -73,14 +77,16 @@ public class PostServiceImpl implements PostService {
                 }
                 log.debug("recommresult: " + recommResult.getInfo());
                 RecommContent recommContent = new RecommContent();
-                String url = yunqueurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
+                String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
                 recommContent.setUrl(url);
+                recommContent.setTitle(iKnowledgeInfo.getTitle());
                 recommContent.setAuthor(iKnowledgeInfo.getAuthor());
                 recommContent.setDomain(iKnowledgeInfo.getDomain());
                 recommContent.setRelevancy(recommResult.getScore());
-                recommContent.setSource(iKnowledgeInfo.getKnowledgeSource());
+                recommContent.setSource("0");
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setRsource("标签");
+                recommContent.setRsource("");
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
                 recommContents.add(recommContent);
                 ids.add(iKnowledgeInfo.getSourceId());
 
@@ -92,10 +98,17 @@ public class PostServiceImpl implements PostService {
             }
             Object object = null;
             if (ObjectUtils.isNotEmpty(recommContents)) {
+//                云雀协议封装
+
+                YunqueContent yunqueContent = new YunqueContent();
+                yunqueContent.setReceiverId(iUserFollow.getIdNum());
+                yunqueContent.setMsgContent(recommContents);
+                yunqueContent.setReceiverName(iUserFollow.getUserName());
+                yunqueContent.setSenderOrgName(iUserFollow.getOrgName());
 
                 log.info("post recommComments；" + recommContents.toString());
 
-                object = yunqueClient.postMessage("a");
+                object = yunqueClient.postMessage(yunqueContent);
             }
 //             调用成功，则记录推荐流水，下次不再推荐
             if (ObjectUtils.isNotEmpty(object) && object.equals("test")) {
@@ -104,7 +117,7 @@ public class PostServiceImpl implements PostService {
                 ireRecommLog.setKnowledge(StringUtils.join(ids, ","));
                 Date day = new Date();
                 Timestamp localDateTime = new Timestamp(day.getTime());
-                ;
+
                 ireRecommLog.setPostTime(localDateTime);
 
                 iIreRecommLogService.save(ireRecommLog);
@@ -151,7 +164,7 @@ public class PostServiceImpl implements PostService {
                 }
                 log.debug("recommresult: " + recommResult.getInfo());
                 RecommContent recommContent = new RecommContent();
-                String url = yunqueurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
+                String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
                 recommContent.setUrl(url);
                 recommContent.setAuthor(iKnowledgeInfo.getAuthor());
                 recommContent.setDomain(iKnowledgeInfo.getDomain());
@@ -159,6 +172,7 @@ public class PostServiceImpl implements PostService {
                 recommContent.setSource(iKnowledgeInfo.getKnowledgeSource());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
                 recommContent.setRsource("");
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
                 recommContents.add(recommContent);
 
 
@@ -174,4 +188,7 @@ public class PostServiceImpl implements PostService {
 
 
     }
+
+
+
 }

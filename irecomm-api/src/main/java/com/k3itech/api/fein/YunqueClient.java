@@ -1,8 +1,10 @@
 package com.k3itech.api.fein;
 
 import com.k3itech.config.FeignHasHystrixConfigure;
+import com.k3itech.vo.YunqueContent;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface YunqueClient {
         /**
          *yunque推送接口调用
-         * @param name
+         * @param yunqueContent
          * @return
          */
         @RequestMapping("/Hello/World")
         @HystrixCommand(fallbackMethod = "postFallBack")
-        public Object postMessage(@RequestParam(value="name") String name);
+        public Object postMessage(@RequestBody YunqueContent yunqueContent);
 
 
 }
