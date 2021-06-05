@@ -9,11 +9,13 @@ import com.k3itech.irecomm.re.service.IIreTagWordService;
 import com.k3itech.service.RedisService;
 import com.k3itech.service.TagService;
 import com.k3itech.utils.CommonConstants;
+import com.k3itech.utils.Dicts;
 import com.k3itech.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.nio.charset.Charset;
@@ -42,8 +44,8 @@ public class TagJob extends QuartzJobBean {
     @Autowired
     private IEtlTempService etlTempService;
 
-
-
+    @Value("${userdict.path:}")
+    private String userDict;
 
     final static int rangetimeend=2;
     final static int rangetimestart=1;
@@ -51,7 +53,9 @@ public class TagJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-
+        if (ObjectUtils.isNotEmpty(userDict)) {
+            Dicts.init(userDict, StandardCharsets.UTF_8);
+        }
         String flag = redisService.get(CommonConstants.DEAL_FLAG);
         QueryWrapper<EtlTemp> etlTempQueryWrapper = new QueryWrapper<>();
         etlTempQueryWrapper.orderByDesc("EXTRACT_TIME");;
