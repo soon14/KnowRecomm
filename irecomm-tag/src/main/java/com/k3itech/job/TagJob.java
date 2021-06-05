@@ -16,6 +16,9 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,27 +42,37 @@ public class TagJob extends QuartzJobBean {
     @Autowired
     private IEtlTempService etlTempService;
 
+
+
+
     final static int rangetimeend=2;
     final static int rangetimestart=1;
 
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+
         String flag = redisService.get(CommonConstants.DEAL_FLAG);
         QueryWrapper<EtlTemp> etlTempQueryWrapper = new QueryWrapper<>();
-        etlTempQueryWrapper.orderByDesc("EXTRACT_TIME");
-        EtlTemp etlTemp = etlTempService.getOne(etlTempQueryWrapper);
+        etlTempQueryWrapper.orderByDesc("EXTRACT_TIME");;
+        List<EtlTemp> etlTemps = etlTempService.list(etlTempQueryWrapper);
+
         int hours=0;
 //        计算当前时间与抽取结束时间差
-        if (ObjectUtils.isNotEmpty(etlTemp)) {
-            Timestamp etltime = etlTemp.getExtractTime();
-            Date day = new Date();
-            Timestamp currenttime = new Timestamp(day.getTime());
-            long t1 = etltime.getTime();
-            long t2 = currenttime.getTime();
-            hours = (int) ((t1 - t2) / (1000 * 60 * 60));
-            int minutes = (int) (((t1 - t2) / 1000 - hours * (60 * 60)) / 60);
-            int second = (int) ((t1 - t2) / 1000 - hours * (60 * 60) - minutes * 60);
+        if (ObjectUtils.isNotEmpty(etlTemps)) {
+            Timestamp etltime = etlTemps.get(0).getExtractTime();
+            if (ObjectUtils.isNotEmpty(etltime)) {
+
+
+                Date day = new Date();
+                Timestamp currenttime = new Timestamp(day.getTime());
+                long t1 = currenttime.getTime();
+                long t2 = etltime.getTime();
+                hours = (int) ((t1 - t2) / (1000 * 60 * 60));
+                int minutes = (int) (((t1 - t2) / 1000 - hours * (60 * 60)) / 60);
+                int second = (int) ((t1 - t2) / 1000 - hours * (60 * 60) - minutes * 60);
+                log.info("current hours:" + hours);
+            }
         }
 //        若没有获取到处理标记，则默认为可以处理打标签
         if (ObjectUtils.isEmpty(flag)){

@@ -166,7 +166,7 @@ public class TagServiceImpl implements TagService {
     public String tagZhilianganli(BigDecimal id) {
         DkZhiliangwentianli zhiliang= iDkZhiliangwentianliService.getById(id);
         if (zhiliang==null){
-            log.debug("zhiliang kong "+id);
+            log.info("zhiliang kong "+id);
             return "";
         }
 
@@ -256,9 +256,9 @@ public class TagServiceImpl implements TagService {
             QueryWrapper<IreTagWord> queryWrapper= new QueryWrapper<>();
             queryWrapper.eq("WORD",keyword);
             List<IreTagWord> tagWords=iiTagWordService.list(queryWrapper);
-           /* if (tagWords.size()<=0){
+            if (tagWords.size()<=0){
                 newKeywords.remove(keyword);
-            }*/
+            }
         }
 
 
