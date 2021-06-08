@@ -166,7 +166,7 @@ public class TagServiceImpl implements TagService {
     public String tagZhilianganli(BigDecimal id) {
         DkZhiliangwentianli zhiliang= iDkZhiliangwentianliService.getById(id);
         if (zhiliang==null){
-            log.debug("zhiliang kong "+id);
+            log.info("zhiliang kong "+id);
             return "";
         }
 
@@ -251,14 +251,14 @@ public class TagServiceImpl implements TagService {
         if (ObjectUtils.isEmpty(keywords)){
             return new ArrayList<>();
         }
-        List<String> newKeywords= keywords;
+        List<String> newKeywords= new ArrayList<>();
         for (String keyword:keywords){
             QueryWrapper<IreTagWord> queryWrapper= new QueryWrapper<>();
             queryWrapper.eq("WORD",keyword);
             List<IreTagWord> tagWords=iiTagWordService.list(queryWrapper);
-           /* if (tagWords.size()<=0){
-                newKeywords.remove(keyword);
-            }*/
+            if (tagWords.size()>0){
+                newKeywords.add(keyword);
+            }
         }
 
 
@@ -267,7 +267,7 @@ public class TagServiceImpl implements TagService {
 
     public String getContentFromCaltksFile(BigDecimal id) throws SQLException, IOException, TikaException, SAXException {
         SystemFile systemFile=systemFileService.getById(id);
-        if (ObjectUtils.isNotEmpty(systemFile)){
+        if (ObjectUtils.isEmpty(systemFile)){
             log.debug("无数据：" +id);
             return "";
         }

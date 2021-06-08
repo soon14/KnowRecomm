@@ -52,7 +52,7 @@ swagger:
 job:
   quartz:
     trigger:
-      time: 00 */5 * * * ?
+      time: 00 30 09 * * ?
 
 
 yunque:

@@ -26,7 +26,7 @@
 		<module>irecomm-tag</module>
 		<module>spring-cloud-eureka-server</module>
 		<module>irecomm-webservice</module>
-		<module>irecomm-webserviceclient</module>
+<!--		<module>irecomm-webserviceclient</module>-->
 		<module>spring-cloud-eureka-config</module>
 
 	</modules>

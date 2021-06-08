@@ -42,7 +42,7 @@ public class Swagger2 {
                 // 页面标题
                 .title("Spring Boot 测试使用 Swagger2 构建RESTful API")
                 // 创建人信息
-                .contact(new Contact("MrZhang",  "https://www.cnblogs.com/zs-notes/category/1258467.html",  "test@qq.com"))
+                .contact(new Contact("test",  "",  "test@qq.com"))
                 // 版本号
                 .version("1.0")
                 // 描述

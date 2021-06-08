@@ -204,6 +204,7 @@ public class MybatisGenerator {
         recomm.add("IRE_USER_INFO");
         recomm.add("IRE_USER_RECOMMRESULT");
         recomm.add("IRE_RECOMM_LOG");
+        recomm.add("ETL_TEMP");
 //        recomm.add("USER_POST");
         recomm.add("PERSON_POST");
         modeltable.put("re", recomm);

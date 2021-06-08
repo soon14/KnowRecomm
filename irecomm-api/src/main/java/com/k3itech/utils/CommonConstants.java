@@ -27,8 +27,11 @@ public interface CommonConstants {
 
     String DEAL_FLAG="DEAL_FLAG";
 
+    String TAG_FLAG="TAG_FLAG";
+
     String CALC_ING_FLG="CALC_ING_FLG";
     String CALC_OVER_FLG="CALC_OVER_FLG";
     String TAG_ING_FLG="TAG_ING_FLG";
     String TAG_OVER_FLG="TAG_OVER_FLG";
+    String POST_OVER_FLG="POST_OVER_FLG";
 }

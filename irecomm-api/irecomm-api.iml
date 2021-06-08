@@ -319,6 +319,7 @@
     <orderEntry type="library" name="Maven: org.apache.pdfbox:jbig2-imageio:3.0.3" level="project" />
     <orderEntry type="library" name="Maven: com.github.jai-imageio:jai-imageio-core:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.huaban:jieba-analysis:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.hankcs:hanlp:portable-1.7.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:2.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:2.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:2.0.0.RELEASE" level="project" />

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author jobob
- * @since 2021-06-03
+ * @since 2021-06-04
  */
 public interface IreRecommLogMapper extends BaseMapper<IreRecommLog> {
 

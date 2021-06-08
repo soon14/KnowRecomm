@@ -36,8 +36,14 @@ public class CalculateServiceImpl implements CalculateService {
     private long timeout;
 
 
+    /**
+     * 用户标签数量
+     */
     static final Integer USERTAGSIZE = 3;
-    static final Integer RESULTSIZE = 0;
+    /**
+     * 匹配结果数量
+     */
+    static final Integer RESULTSIZE = 5;
 
     @Override
     public void compareU2K(IreUserFollow iUserFollow, List<IreKnowledgeInfo> iKnowledgeInfos) {
@@ -72,7 +78,7 @@ public class CalculateServiceImpl implements CalculateService {
 
         if (result.size() < RESULTSIZE) {
 
-            result = getDepartResult(iUserFollow);
+//            result = getDepartResult(iUserFollow);
         }
 
         RecommResults recommResults = new RecommResults();
@@ -85,6 +91,12 @@ public class CalculateServiceImpl implements CalculateService {
 
     }
 
+    /**
+     * 标签数匹配结果
+     * @param tags
+     * @param iKnowledgeInfos
+     * @return
+     */
     public List<RecommResult> getTagResult(List<String> tags, List<IreKnowledgeInfo> iKnowledgeInfos) {
         List<RecommResult> result = new ArrayList<>();
 
@@ -116,6 +128,12 @@ public class CalculateServiceImpl implements CalculateService {
     }
 
 
+    /**
+     * 相似度匹配结果
+     * @param iUserFollow
+     * @param iKnowledgeInfos
+     * @return
+     */
     public List<RecommResult> getSimilaryResult(IreUserFollow iUserFollow, List<IreKnowledgeInfo> iKnowledgeInfos) {
         List<RecommResult> result = new ArrayList<>();
         String sencentence1 = iUserFollow.getPost() + iUserFollow.getFollowDevice() + iUserFollow.getFollowModel() + iUserFollow.getFollowPro();

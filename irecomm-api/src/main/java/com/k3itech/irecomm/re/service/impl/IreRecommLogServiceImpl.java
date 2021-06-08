@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author jobob
- * @since 2021-06-03
+ * @since 2021-06-04
  */
 @Service
 public class IreRecommLogServiceImpl extends ServiceImpl<IreRecommLogMapper, IreRecommLog> implements IIreRecommLogService {

@@ -7,6 +7,7 @@ import com.k3itech.irecomm.re.service.IIreUserFollowService;
 import com.k3itech.service.CalculateService;
 import com.k3itech.service.RedisService;
 import com.k3itech.utils.CommonConstants;
+import com.k3itech.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -36,7 +37,7 @@ public class CalcJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String flag = redisService.get(CommonConstants.DEAL_FLAG);
-        if (flag.equalsIgnoreCase(CommonConstants.TAG_OVER_FLG)) {
+        if (ObjectUtils.isNotEmpty(flag)&&flag.equalsIgnoreCase(CommonConstants.TAG_OVER_FLG)) {
              redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.CALC_ING_FLG);
             String msg = (String) jobExecutionContext.getJobDetail().getJobDataMap().get("msg");
 
@@ -48,7 +49,7 @@ public class CalcJob extends QuartzJobBean {
 
             redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.CALC_OVER_FLG);
         }else{
-            log.info("cureent deal flag is "+flag);
+            log.info("current deal flag is "+flag);
 
     }
 

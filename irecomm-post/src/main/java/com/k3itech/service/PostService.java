@@ -2,6 +2,9 @@ package com.k3itech.service;
 
 
 import com.k3itech.irecomm.re.entity.IreUserFollow;
+import com.k3itech.vo.RecommContent;
+
+import java.util.List;
 
 /**
  * @author dell
@@ -14,4 +17,5 @@ public interface PostService {
      * @return
      */
     public boolean postKnowledge(IreUserFollow iUserFollow);
+    public List<RecommContent> getKnowledge(IreUserFollow iUserFollow);
 }

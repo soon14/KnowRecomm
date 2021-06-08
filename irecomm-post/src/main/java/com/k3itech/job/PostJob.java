@@ -7,6 +7,7 @@ import com.k3itech.irecomm.yunque.entity.AdminUser;
 import com.k3itech.service.PostService;
 import com.k3itech.service.RedisService;
 import com.k3itech.utils.CommonConstants;
+import com.k3itech.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -38,7 +39,7 @@ public class PostJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String flag = redisService.get(CommonConstants.DEAL_FLAG);
         boolean postresult=true;
-        if (flag.equalsIgnoreCase(CommonConstants.CALC_OVER_FLG)){
+        if (ObjectUtils.isNotEmpty(flag)&&flag.equalsIgnoreCase(CommonConstants.CALC_OVER_FLG)){
 
             log.info("start post ");
             QueryWrapper<IreUserFollow> orgqueryWrapper= new QueryWrapper();
@@ -52,6 +53,10 @@ public class PostJob extends QuartzJobBean {
 
               }
             }
+
+
+
+            redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.POST_OVER_FLG);
 
 
         }else{
