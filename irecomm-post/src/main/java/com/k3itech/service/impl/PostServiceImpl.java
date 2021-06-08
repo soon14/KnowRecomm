@@ -18,6 +18,10 @@ import com.k3itech.vo.RecommResults;
 import com.k3itech.vo.YunqueContent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.openapisdk.entity.OpenApiRequestParamVo;
+import org.openapisdk.request.NoticeRequest;
+import org.openapisdk.response.ApiResponse;
+import org.openapisdk.service.OpenApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,10 +30,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author dell
@@ -108,10 +109,25 @@ public class PostServiceImpl implements PostService {
 
                 log.info("post recommComments；" + recommContents.toString());
 
-                object = yunqueClient.postMessage(yunqueContent);
+                OpenApiService service = new OpenApiService();
+                NoticeRequest request= new NoticeRequest();
+                request.setMsgContent(yunqueContent.getMsgContent());
+                request.setReceiverId(yunqueContent.getReceiverId());
+                OpenApiRequestParamVo paramVo = new OpenApiRequestParamVo();
+                paramVo.setApiUrl("http://10.11.24.129:8030/OpenApi/openApi/service");
+                paramVo.setServiceId("AvRqvvAY");
+                paramVo.setRequestBody(request);
+                paramVo.setToken("oeadmOczKMmUw2jnDoimdSZEWIAHqTxDwDkYiBy9uPscrLHx");
+                ApiResponse<Map<String, Object>> map = service.doPostMethod(paramVo);
+                System.out.println(map);
+                object=map.getStatus();
+
+
+
+//                object = yunqueClient.postMessage(yunqueContent);
             }
 //             调用成功，则记录推荐流水，下次不再推荐
-            if (ObjectUtils.isNotEmpty(object) && object.equals("test")) {
+            if (ObjectUtils.isNotEmpty(object) && object.equals("200")) {
                 IreRecommLog ireRecommLog = new IreRecommLog();
                 ireRecommLog.setIdNum(iUserFollow.getIdNum());
                 ireRecommLog.setKnowledge(StringUtils.join(ids, ","));

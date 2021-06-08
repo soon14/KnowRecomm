@@ -180,6 +180,13 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openapi</groupId>
+            <artifactId>openapi-sdk</artifactId>
+            <version>1.0-RELEASE</version>
+            <systemPath>${project.basedir}/lib/openapi-sdk-1.0-RELEASE.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

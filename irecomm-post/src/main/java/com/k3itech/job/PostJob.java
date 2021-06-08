@@ -49,7 +49,9 @@ public class PostJob extends QuartzJobBean {
             List<IreUserFollow> ireUserFollows = iIreUserFollowService.list(orgqueryWrapper);
             for (IreUserFollow ireUserFollow:ireUserFollows){
               postresult = postService.postKnowledge(ireUserFollow);
+//              若发送失败
               if (!postresult){
+
 
               }
             }
