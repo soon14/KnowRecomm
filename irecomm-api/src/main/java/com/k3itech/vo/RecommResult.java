@@ -11,7 +11,14 @@ import lombok.Data;
 public class RecommResult implements Comparable<RecommResult>{
 
     private IreKnowledgeInfo info;
-
+    /**
+     * 结果匹配命中方式，（"标签，相似度，部门"）
+     */
+    private String type;
+    /**
+     * 命中的标签
+     */
+   private String tags;
     private Double score;
 
 //    private Boolean isPost;

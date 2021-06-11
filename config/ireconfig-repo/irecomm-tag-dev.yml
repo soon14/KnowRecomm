@@ -58,7 +58,7 @@ calc:
   zhilianganli:
     ktype: 6
 #人员筛选，部门，二部
-  orgcode: 0010%
+  orgcode: 0011%
 #用户自定义词典路径
 userdict:
   path:

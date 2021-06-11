@@ -85,8 +85,9 @@ public class PostServiceImpl implements PostService {
                 recommContent.setDomain(iKnowledgeInfo.getDomain());
                 recommContent.setRelevancy(recommResult.getScore());
                 recommContent.setSource("0");
+                recommContent.setRsource(recommResult.getTags());
+                recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setRsource("");
                 recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
                 recommContents.add(recommContent);
                 ids.add(iKnowledgeInfo.getSourceId());
@@ -182,12 +183,14 @@ public class PostServiceImpl implements PostService {
                 RecommContent recommContent = new RecommContent();
                 String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
                 recommContent.setUrl(url);
+                recommContent.setTitle(iKnowledgeInfo.getTitle());
                 recommContent.setAuthor(iKnowledgeInfo.getAuthor());
                 recommContent.setDomain(iKnowledgeInfo.getDomain());
                 recommContent.setRelevancy(recommResult.getScore());
-                recommContent.setSource(iKnowledgeInfo.getKnowledgeSource());
+                recommContent.setSource("0");
+                recommContent.setRsource(recommResult.getTags());
+                recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setRsource("");
                 recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
                 recommContents.add(recommContent);
 

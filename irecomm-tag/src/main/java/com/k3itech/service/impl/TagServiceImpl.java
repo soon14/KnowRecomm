@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author:dell
@@ -110,7 +111,7 @@ public class TagServiceImpl implements TagService {
         for (MetaKnowledge metaKnowledge:ks){
             IreKnowledgeInfo iKnowledgeInfo = new IreKnowledgeInfo();
 
-            if (metaKnowledge.getKnowledgetypeId().compareTo(new BigDecimal(zhiliang))==0){
+            if (metaKnowledge.getKtypeid().compareTo(new BigDecimal(zhiliang))==0){
                 String tagkeywords=tagZhilianganli(metaKnowledge.getId());
                 iKnowledgeInfo.setTagKeywords(tagkeywords);
 
@@ -212,7 +213,8 @@ public class TagServiceImpl implements TagService {
             }
 
 
-            String tagkeywords= String.join(",",keywords);
+
+            String tagkeywords= String.join(",",keywords.stream().distinct().collect(Collectors.toList()));
             IreUserFollow iUserFollow = new IreUserFollow();
             iUserFollow.setIdNum(user.getPId());
             iUserFollow.setUserName(user.getName());
@@ -268,16 +270,16 @@ public class TagServiceImpl implements TagService {
     public String getContentFromCaltksFile(BigDecimal id) throws SQLException, IOException, TikaException, SAXException {
         SystemFile systemFile=systemFileService.getById(id);
         if (ObjectUtils.isEmpty(systemFile)){
-            log.debug("无数据：" +id);
+            log.info("无数据：" +id);
             return "";
         }
-        log.debug("获取文本：" +id);
+        log.info("获取文本：" +id);
         byte[] filebinary= systemFile.getFileBinary();
         InputStream inputStream=null;
         if(ObjectUtils.isNotEmpty(filebinary)) {
             inputStream =new ByteArrayInputStream(filebinary);
         }else{
-           log.debug("abc"+systemFile.toString());
+           log.info("abc"+systemFile.toString());
             return "";
         }
 
