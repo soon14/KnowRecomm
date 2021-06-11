@@ -68,13 +68,22 @@ public class CalculateServiceImpl implements CalculateService {
         }
 
 
-        if (userTags.size() < USERTAGSIZE) {
-            result = getSimilaryResult(iUserFollow, iKnowledgeInfos);
-        } else {
+        if (userTags.size() >USERTAGSIZE) {
+//            result = getSimilaryResult(iUserFollow, iKnowledgeInfos);
+//        } else {
             result = getTagResult(userTags, iKnowledgeInfos);
         }
 
-        log.debug("resultsize: " + result.size());
+        log.info("tagresultsize: " + result.size());
+        if (result.size() < RESULTSIZE) {
+
+            List<RecommResult> simresults= getSimilaryResult(iUserFollow, iKnowledgeInfos);
+            if (ObjectUtils.isNotEmpty(simresults)){
+                result.addAll(simresults);
+            }
+        }
+        log.info("simresultsize: " + result.size());
+
 
         if (result.size() < RESULTSIZE) {
 
@@ -103,17 +112,31 @@ public class CalculateServiceImpl implements CalculateService {
 
         for (IreKnowledgeInfo knowledgeInfo : iKnowledgeInfos) {
             List<String> knowledgetags = new ArrayList<>();
-            ArrayList<String> tagModel = new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagModel().split(",")));
-            ArrayList<String> tagDevice = new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagDevice().split(",")));
-            ArrayList<String> tagPro = new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagKeywords().split(",")));
-            knowledgetags.addAll(tagDevice);
+            ArrayList<String> tagModel = new ArrayList<String>();
+            if (ObjectUtils.isNotEmpty(knowledgeInfo.getTagModel())) {
+               tagModel= new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagModel().split(",")));
+            }
+            ArrayList<String> tagDevice = new ArrayList<String>();
+            if (ObjectUtils.isNotEmpty(knowledgeInfo.getTagDevice())) {
+           tagDevice= new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagDevice().split(",")));
+
+            }
+            ArrayList<String> tagPro = new ArrayList<String>();
+            if (ObjectUtils.isNotEmpty(knowledgeInfo.getTagKeywords())) {
+                tagPro = new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagKeywords().split(",")));
+            }knowledgetags.addAll(tagDevice);
             knowledgetags.addAll(tagModel);
             knowledgetags.addAll(tagPro);
             List<String> equaltags = tags
                     .stream()
                     .filter(e -> knowledgetags.contains(e))
                     .collect(Collectors.toList());
+            if (equaltags.size()<1){
+                continue;
+            }
             RecommResult recommResult = new RecommResult();
+            recommResult.setType("标签");
+            recommResult.setTags(String.join(",",equaltags));
             recommResult.setInfo(knowledgeInfo);
             recommResult.setScore(0.3 * equaltags.size());
             result.add(recommResult);
@@ -136,7 +159,7 @@ public class CalculateServiceImpl implements CalculateService {
      */
     public List<RecommResult> getSimilaryResult(IreUserFollow iUserFollow, List<IreKnowledgeInfo> iKnowledgeInfos) {
         List<RecommResult> result = new ArrayList<>();
-        String sencentence1 = iUserFollow.getPost() + iUserFollow.getFollowDevice() + iUserFollow.getFollowModel() + iUserFollow.getFollowPro();
+        String sencentence1 = iUserFollow.getUserJob() + iUserFollow.getFollowDevice() + iUserFollow.getFollowModel() + iUserFollow.getFollowPro();
 
         for (IreKnowledgeInfo knowledgeInfo : iKnowledgeInfos) {
             String sencentence2 = knowledgeInfo.getTitle() + knowledgeInfo.getTagKeywords();
@@ -145,6 +168,7 @@ public class CalculateServiceImpl implements CalculateService {
             RecommResult recommResult = new RecommResult();
             recommResult.setInfo(knowledgeInfo);
             recommResult.setScore(score);
+            recommResult.setType("相似度");
             if (score > 0.3) {
                 result.add(recommResult);
             }
