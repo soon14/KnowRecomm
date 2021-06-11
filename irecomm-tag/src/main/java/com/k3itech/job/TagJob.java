@@ -84,7 +84,7 @@ public class TagJob extends QuartzJobBean {
         }
 
 //            若当前时间在抽取时间结束1-2小时内，并且处理标记为POST_OVER_FLAG则进行打标签工作
-        if (hours<rangetimeend && hours>rangetimestart && flag.equalsIgnoreCase(CommonConstants.POST_OVER_FLG)) {
+        if (hours<=rangetimeend && hours>=rangetimestart && flag.equalsIgnoreCase(CommonConstants.POST_OVER_FLG)) {
 
             log.info("start tag  ");
             redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.TAG_ING_FLG);
