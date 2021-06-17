@@ -81,6 +81,7 @@ public class Task2kController {
                 knowledgeResult.setFileName(iKnowledgeInfo.getTitle());
                 iKnowledgeInfo.setUrl( knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + param.getUserPId() + "&flag=client ");
                 knowledgeResult.setFileType(iKnowledgeInfo.getKtype());
+                knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");
                 knowledgeResults.add(knowledgeResult);
             }
