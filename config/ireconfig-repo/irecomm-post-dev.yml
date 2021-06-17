@@ -54,13 +54,13 @@ job:
     trigger:
       time: 00 30 09 * * ?
 
-
+#知识链接地址的系统ip和端口
 yunque:
   url: http://ip:port
 
 #人员筛选，部门，二部
 calc:
-  orgcode: 0010%,0011%
+  orgcode: 0011%
 logging:
   level:
     root: info

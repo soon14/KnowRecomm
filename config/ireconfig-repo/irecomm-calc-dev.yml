@@ -61,4 +61,4 @@ calc:
   orgcode: 0011%
   #redis计算结果保存时间
   redis:
-    timeout: 2
+    timeout: 7

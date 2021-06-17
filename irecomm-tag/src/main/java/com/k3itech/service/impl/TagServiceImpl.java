@@ -249,7 +249,7 @@ public class TagServiceImpl implements TagService {
 
     public List<String> textRank(String text){
 
-        List<String> keywords=TextRankKeyword.getKeywordList(text, 1000);
+        List<String> keywords=TextRankKeyword.getKeywordList(text, 100);
         if (ObjectUtils.isEmpty(keywords)){
             return new ArrayList<>();
         }
@@ -264,7 +264,7 @@ public class TagServiceImpl implements TagService {
         }
 
 
-        return newKeywords;
+        return keywords;
     }
 
     public String getContentFromCaltksFile(BigDecimal id) throws SQLException, IOException, TikaException, SAXException {

@@ -45,6 +45,11 @@ public class CalculateServiceImpl implements CalculateService {
      */
     static final Integer RESULTSIZE = 5;
 
+    /**
+     * 计算用户的知识匹配结果
+     * @param iUserFollow
+     * @param iKnowledgeInfos
+     */
     @Override
     public void compareU2K(IreUserFollow iUserFollow, List<IreKnowledgeInfo> iKnowledgeInfos) {
         List<String> userTags = new ArrayList<>();
@@ -67,7 +72,7 @@ public class CalculateServiceImpl implements CalculateService {
             userTags.addAll(tagPro);
         }
 
-
+//        判断用户标签数量
         if (userTags.size() >USERTAGSIZE) {
 //            result = getSimilaryResult(iUserFollow, iKnowledgeInfos);
 //        } else {
@@ -127,6 +132,7 @@ public class CalculateServiceImpl implements CalculateService {
             }knowledgetags.addAll(tagDevice);
             knowledgetags.addAll(tagModel);
             knowledgetags.addAll(tagPro);
+            //知识标签和人员标签命中的结果获取
             List<String> equaltags = tags
                     .stream()
                     .filter(e -> knowledgetags.contains(e))

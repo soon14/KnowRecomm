@@ -1,5 +1,6 @@
 package com.k3itech.job;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
 import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
@@ -8,6 +9,7 @@ import com.k3itech.service.CalculateService;
 import com.k3itech.service.RedisService;
 import com.k3itech.utils.CommonConstants;
 import com.k3itech.utils.ObjectUtils;
+import com.k3itech.utils.SecretLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -42,8 +44,11 @@ public class CalcJob extends QuartzJobBean {
             String msg = (String) jobExecutionContext.getJobDetail().getJobDataMap().get("msg");
 
             List<IreUserFollow> ireUserFollowList = iIreUserFollowService.list();
-            List<IreKnowledgeInfo> ireKnowledgeInfos = iIreKnowledgeInfoService.list();
+
             for (IreUserFollow ireUserFollow : ireUserFollowList) {
+                QueryWrapper<IreKnowledgeInfo> queryWrapper= new QueryWrapper();
+                queryWrapper.in("SECURITY_LEVEL", SecretLevel.getKnowledgeSecretLevelsByUserLevel(ireUserFollow.getSecretLevel()));
+                List<IreKnowledgeInfo> ireKnowledgeInfos = iIreKnowledgeInfoService.list(queryWrapper);
                 calculateService.compareU2K(ireUserFollow, ireKnowledgeInfos);
             }
 

@@ -12,6 +12,7 @@ import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.service.PostService;
 import com.k3itech.utils.CommonConstants;
 import com.k3itech.utils.ObjectUtils;
+import com.k3itech.utils.SecretLevel;
 import com.k3itech.vo.RecommContent;
 import com.k3itech.vo.RecommResult;
 import com.k3itech.vo.RecommResults;
@@ -88,7 +89,7 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRsource(recommResult.getTags());
                 recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
                 recommContents.add(recommContent);
                 ids.add(iKnowledgeInfo.getSourceId());
 
@@ -99,6 +100,8 @@ public class PostServiceImpl implements PostService {
 
             }
             Object object = null;
+            Object message = null;
+            Object status = null;
             if (ObjectUtils.isNotEmpty(recommContents)) {
 //                云雀协议封装
 
@@ -107,6 +110,7 @@ public class PostServiceImpl implements PostService {
                 yunqueContent.setMsgContent(recommContents);
                 yunqueContent.setReceiverName(iUserFollow.getUserName());
                 yunqueContent.setSenderOrgName(iUserFollow.getOrgName());
+                yunqueContent.setLevel(SecretLevel.getSecretLevelsByUserLevel(iUserFollow.getSecretLevel()));
 
                 log.info("post recommComments；" + recommContents.toString());
 
@@ -114,21 +118,36 @@ public class PostServiceImpl implements PostService {
                 NoticeRequest request= new NoticeRequest();
                 request.setMsgContent(yunqueContent.getMsgContent());
                 request.setReceiverId(yunqueContent.getReceiverId());
+                request.setReceiverName(yunqueContent.getReceiverName());
+                request.setNoticeLevel(yunqueContent.getLevel());
+                request.setSenderOrgName(yunqueContent.getSenderOrgName());
+                request.setBz(yunqueContent.getBz());
+                request.setSenderType(yunqueContent.getSenderType());
                 OpenApiRequestParamVo paramVo = new OpenApiRequestParamVo();
-                paramVo.setApiUrl("http://10.11.24.129:8030/OpenApi/openApi/service");
+                paramVo.setApiUrl("/openApi/service");
                 paramVo.setServiceId("AvRqvvAY");
+
+
                 paramVo.setRequestBody(request);
                 paramVo.setToken("oeadmOczKMmUw2jnDoimdSZEWIAHqTxDwDkYiBy9uPscrLHx");
                 ApiResponse<Map<String, Object>> map = service.doPostMethod(paramVo);
                 System.out.println(map);
                 object=map.getStatus();
+                Map<String, Object> res= (Map<String, Object>) map.getResult().get("res");
+                System.out.println("res "+res);
+                if (ObjectUtils.isNotEmpty(res)) {
+                    message = res.get("message");
+                    System.out.println(message);
+                    status = res.get("status");
+                    System.out.println(status);
+                }
 
 
 
 //                object = yunqueClient.postMessage(yunqueContent);
             }
 //             调用成功，则记录推荐流水，下次不再推荐
-            if (ObjectUtils.isNotEmpty(object) && object.equals("200")) {
+            if (ObjectUtils.isNotEmpty(object) &&ObjectUtils.isNotEmpty(status)&&ObjectUtils.isNotEmpty(message)&&status.equals("200")&&message.equals("操作成功")) {
                 IreRecommLog ireRecommLog = new IreRecommLog();
                 ireRecommLog.setIdNum(iUserFollow.getIdNum());
                 ireRecommLog.setKnowledge(StringUtils.join(ids, ","));
@@ -191,7 +210,8 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRsource(recommResult.getTags());
                 recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum());
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
+
                 recommContents.add(recommContent);
 
 
