@@ -1,0 +1,42 @@
+java服务启动无顺序要求，后台流动都是按数据来的：
+webservice
+task2k
+tag
+calc
+post
+
+swagger手动测试顺序和设置：
+地址：
+http://localhost:8702/swagger-ui.html#/tag-controller/tagUsingGET
+tag算标签，接口返回未报错表示后台执行成功
+可以查看下，ire_knowledge_info 和ire_user_follow表有没有生成标签数据
+
+没数据的话，可以改下
+#质量问题案例是6,标准规范是2
+calc:
+  ktypes: 6,2
+  zhilianganli:
+    ktype: 6
+#人员筛选，部门，二部
+  orgcode: 0010%
+人员筛选
+
+和
+可能词表中没有数据
+TagServiceImpl.java
+中第271行
+textRank方法，将返回改为keywords，这样抽取的关键词不会从词表去过滤了，
+
+地址：
+http://localhost:8704/swagger-ui.html#/calc-controller
+calc计算，接口返回未报错表示后台执行成功
+会将匹配结果写人到redis中，默认保留7天，
+
+
+地址：
+http://localhost:8701/swagger-ui.html#/post-controller/getPostResultsUsingGET
+清空数据库表IRE_RECOMM_LOG，推送会去该表查询是否有推送历史记录进行过滤
+先是getresults可以看看是否有数据可以推送
+然后postmessage 后台会将相应的数据调用接口推送到云雀
+getCallBak是云雀回调调用的接口
+

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
+import com.k3itech.irecomm.caltks.entity.SystemFile;
+import com.k3itech.irecomm.caltks.service.ISystemFileService;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
 import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
@@ -47,6 +49,8 @@ public class Task2kController {
     @Autowired
     @Resource
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    ISystemFileService iSystemFileService;
 
     @Value("${knowledge.url}")
     private String knowledgeurl;
@@ -80,10 +84,19 @@ public class Task2kController {
                 knowledgeResult.setAuthor(iKnowledgeInfo.getAuthor());
                 knowledgeResult.setFileName(iKnowledgeInfo.getTitle());
                 iKnowledgeInfo.setUrl( knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + param.getUserPId() + "&flag=client ");
-                knowledgeResult.setFileType(iKnowledgeInfo.getKtype());
+                QueryWrapper<SystemFile> queryWrapper= new QueryWrapper();
+//                queryWrapper.eq("ID",iKnowledgeInfo.getSourceId());
+              /* SystemFile systemFile= iSystemFileService.getById(iKnowledgeInfo.getSourceId());
+               if (ObjectUtils.isNotEmpty(systemFile)) {
+
+                   knowledgeResult.setFileType(systemFile.getFileType());
+               }*/
                 knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");
                 knowledgeResults.add(knowledgeResult);
+                if (knowledgeResults.size()==3){
+                    break;
+                }
             }
         Map<String,Object> map = new HashMap<>();
             map.put("data",knowledgeResults);

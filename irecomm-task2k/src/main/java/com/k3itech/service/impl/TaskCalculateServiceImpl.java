@@ -8,7 +8,9 @@ import com.k3itech.irecomm.caltks.entity.SystemFile;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreTagWord;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
+import com.k3itech.irecomm.re.entity.PersonPost;
 import com.k3itech.irecomm.re.service.IIreTagWordService;
+import com.k3itech.irecomm.re.service.IPersonPostService;
 import com.k3itech.service.TaskCalculateService;
 import com.k3itech.utils.Analysis;
 import com.k3itech.utils.FileUtils;
@@ -64,6 +66,9 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
     @Autowired
     private IIreTagWordService iiTagWordService;
 
+    @Autowired
+    private IPersonPostService iPersonPostService;
+
     /**
      * 计算任务的知识匹配结果
      * @param taskParam
@@ -87,8 +92,12 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
 
         log.info("tagresultsize: " + result.size());
         if (result.size() < RESULTSIZE) {
-
-            List<RecommResult> simresults= getSimilaryResult(taskParam.getTaskName()+taskParam.getProjectName(), iKnowledgeInfos);
+            PersonPost personPost=iPersonPostService.getById(taskParam.getUserPId());
+            String uesrjob = "";
+            if (ObjectUtils.isNotEmpty(personPost)){
+                uesrjob=personPost.getVdefl();
+            }
+            List<RecommResult> simresults= getSimilaryResult(uesrjob+taskParam.getTaskName()+taskParam.getProjectName(), iKnowledgeInfos);
             if (ObjectUtils.isNotEmpty(simresults)){
                 result.addAll(simresults);
             }
@@ -136,7 +145,8 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
             ArrayList<String> tagPro = new ArrayList<String>();
             if (ObjectUtils.isNotEmpty(knowledgeInfo.getTagKeywords())) {
                 tagPro = new ArrayList<String>(Arrays.asList(knowledgeInfo.getTagKeywords().split(",")));
-            }knowledgetags.addAll(tagDevice);
+            }
+            knowledgetags.addAll(tagDevice);
             knowledgetags.addAll(tagModel);
             knowledgetags.addAll(tagPro);
             //知识标签和人员标签命中的结果获取
@@ -226,7 +236,7 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
         }
 
 
-        return keywords;
+        return newKeywords;
     }
 
 

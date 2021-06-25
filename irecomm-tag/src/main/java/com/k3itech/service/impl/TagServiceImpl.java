@@ -28,6 +28,7 @@ import com.k3itech.service.TagService;
 import com.k3itech.utils.FileUtils;
 import com.k3itech.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.tika.exception.TikaException;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -246,7 +247,11 @@ public class TagServiceImpl implements TagService {
     }
 
 
-
+    /**
+     * textRank抽取关键词
+     * @param text
+     * @return
+     */
     public List<String> textRank(String text){
 
         List<String> keywords=TextRankKeyword.getKeywordList(text, 100);
@@ -254,6 +259,7 @@ public class TagServiceImpl implements TagService {
             return new ArrayList<>();
         }
         List<String> newKeywords= new ArrayList<>();
+//        抽取的关键词从标签词表过滤
         for (String keyword:keywords){
             QueryWrapper<IreTagWord> queryWrapper= new QueryWrapper<>();
             queryWrapper.eq("WORD",keyword);
@@ -264,8 +270,18 @@ public class TagServiceImpl implements TagService {
         }
 
 
-        return keywords;
+        return newKeywords;
     }
+
+    /**
+     * 获取二进制文件内容
+     * @param id
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     * @throws TikaException
+     * @throws SAXException
+     */
 
     public String getContentFromCaltksFile(BigDecimal id) throws SQLException, IOException, TikaException, SAXException {
         SystemFile systemFile=systemFileService.getById(id);
@@ -283,7 +299,10 @@ public class TagServiceImpl implements TagService {
             return "";
         }
 
-       return FileUtils.getContent(inputStream);
+       String content= FileUtils.getContent(inputStream);
+
+        IOUtils.close(inputStream);
+        return content;
 
     }
 

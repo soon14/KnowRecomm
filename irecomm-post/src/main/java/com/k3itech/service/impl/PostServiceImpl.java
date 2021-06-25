@@ -147,7 +147,7 @@ public class PostServiceImpl implements PostService {
 //                object = yunqueClient.postMessage(yunqueContent);
             }
 //             调用成功，则记录推荐流水，下次不再推荐
-            if (ObjectUtils.isNotEmpty(object) &&ObjectUtils.isNotEmpty(status)&&ObjectUtils.isNotEmpty(message)&&status.equals("200")&&message.equals("操作成功")) {
+            if (ObjectUtils.isNotEmpty(object) &&ObjectUtils.isNotEmpty(status)&&ObjectUtils.isNotEmpty(message)&&status.equals(200)&&message.equals("操作成功")) {
                 IreRecommLog ireRecommLog = new IreRecommLog();
                 ireRecommLog.setIdNum(iUserFollow.getIdNum());
                 ireRecommLog.setKnowledge(StringUtils.join(ids, ","));
