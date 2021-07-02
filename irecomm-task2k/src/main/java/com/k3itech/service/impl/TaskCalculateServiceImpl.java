@@ -96,7 +96,7 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
             String uesrjob = "";
             if (ObjectUtils.isNotEmpty(personPost)){
 //                uesrjob=personPost.getVdefl();
-                uesrjob=personPost.getProfessional()+personPost.getDirection();
+                uesrjob=personPost.getProffessional()+personPost.getDirection();
             }
             List<RecommResult> simresults= getSimilaryResult(uesrjob+taskParam.getTaskName()+taskParam.getProjectName(), iKnowledgeInfos);
             if (ObjectUtils.isNotEmpty(simresults)){

@@ -707,77 +707,78 @@ comment on column IRE_TAG_WORD.WORD is '词语'
 comment on column IRE_TAG_WORD.TAG_TYPE is '词语类型（型号、设备分系统、阶段、领域、军兵种、指标、专业方向等）'
 /
 
-
 create table IRE_PERSON_JOB
 (
-    "id_num" VARCHAR2(20) not null
-        primary key,
-    "name" VARCHAR2(255),
-    "org_code" VARCHAR2(255),
-    "type" VARCHAR2(255),
-    "professional" VARCHAR2(255),
-    "direction" VARCHAR2(255)
+    ID_NUM VARCHAR2(20) not null
+        constraint SYS_C0012357
+            primary key,
+    NAME VARCHAR2(255),
+    ORG_CODE VARCHAR2(255),
+    TYPE VARCHAR2(255),
+    PROFFESSION VARCHAR2(255),
+    DIRECTION VARCHAR2(255)
 )
 /
 
-comment on column IRE_PERSON_JOB."id_num" is '身份证'
+comment on column IRE_PERSON_JOB.ID_NUM is '身份证'
 /
 
-comment on column IRE_PERSON_JOB."name" is '姓名'
+comment on column IRE_PERSON_JOB.NAME is '姓名'
 /
 
-comment on column IRE_PERSON_JOB."org_code" is '组织'
+comment on column IRE_PERSON_JOB.ORG_CODE is '组织'
 /
 
-comment on column IRE_PERSON_JOB."type" is '类别'
+comment on column IRE_PERSON_JOB.TYPE is '类别'
 /
 
-comment on column IRE_PERSON_JOB."professional" is '专业'
+comment on column IRE_PERSON_JOB.PROFFESSION is '专业'
 /
 
-comment on column IRE_PERSON_JOB."direction" is '方向'
+comment on column IRE_PERSON_JOB.DIRECTION is '方向'
 /
 
 create table IRE_TAG_STRUCTURE
 (
-    "id" NUMBER not null
-        primary key,
-    "parent_id" NUMBER,
-    "parent_ids" VARCHAR2(255),
-    "text" VARCHAR2(255),
-    "code" VARCHAR2(255),
-    "parent_code" VARCHAR2(255),
-    "parent_codes" VARCHAR2(255),
-    "leaf" NUMBER(2),
-    "grade" NUMBER(2)
+    ID NUMBER not null
+        constraint SYS_C0012359
+            primary key,
+    PARENT_ID NUMBER,
+    PARENT_IDS VARCHAR2(255),
+    TEXT VARCHAR2(255),
+    CODE VARCHAR2(255),
+    PARENT_CODE VARCHAR2(255),
+    PARENT_CODES VARCHAR2(255),
+    LEAF NUMBER(2),
+    GRADE NUMBER(2)
 )
 /
 
-comment on column IRE_TAG_STRUCTURE."id" is '标识'
+comment on column IRE_TAG_STRUCTURE.ID is '标识'
 /
 
-comment on column IRE_TAG_STRUCTURE."parent_id" is '父标识'
+comment on column IRE_TAG_STRUCTURE.PARENT_ID is '父标识'
 /
 
-comment on column IRE_TAG_STRUCTURE."parent_ids" is '所有父标识'
+comment on column IRE_TAG_STRUCTURE.PARENT_IDS is '所有父标识'
 /
 
-comment on column IRE_TAG_STRUCTURE."text" is '名称'
+comment on column IRE_TAG_STRUCTURE.TEXT is '名称'
 /
 
-comment on column IRE_TAG_STRUCTURE."code" is '编码'
+comment on column IRE_TAG_STRUCTURE.CODE is '编码'
 /
 
-comment on column IRE_TAG_STRUCTURE."parent_code" is '父编码'
+comment on column IRE_TAG_STRUCTURE.PARENT_CODE is '父编码'
 /
 
-comment on column IRE_TAG_STRUCTURE."parent_codes" is '所有父编码'
+comment on column IRE_TAG_STRUCTURE.PARENT_CODES is '所有父编码'
 /
 
-comment on column IRE_TAG_STRUCTURE."leaf" is '是否叶子节点（0根节点，1为叶子节点）'
+comment on column IRE_TAG_STRUCTURE.LEAF is '是否叶子节点（0根节点，1为叶子节点）'
 /
 
-comment on column IRE_TAG_STRUCTURE."grade" is '级别'
+comment on column IRE_TAG_STRUCTURE.GRADE is '级别'
 /
 
 create sequence SEQ_RECOMMRESULT

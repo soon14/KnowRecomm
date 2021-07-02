@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author jobob
- * @since 2021-06-29
+ * @since 2021-07-02
  */
 public interface IIreTagStructureService extends IService<IreTagStructure> {
 

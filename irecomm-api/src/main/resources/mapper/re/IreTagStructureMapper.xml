@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.k3itech.irecomm.re.entity.IreTagStructure">
-        <id column="id" property="id" />
-        <result column="parent_id" property="parentId" />
-        <result column="parent_ids" property="parentIds" />
-        <result column="text" property="text" />
-        <result column="code" property="code" />
-        <result column="parent_code" property="parentCode" />
-        <result column="parent_codes" property="parentCodes" />
-        <result column="leaf" property="leaf" />
-        <result column="grade" property="grade" />
+        <id column="ID" property="id" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="PARENT_IDS" property="parentIds" />
+        <result column="TEXT" property="text" />
+        <result column="CODE" property="code" />
+        <result column="PARENT_CODE" property="parentCode" />
+        <result column="PARENT_CODES" property="parentCodes" />
+        <result column="LEAF" property="leaf" />
+        <result column="GRADE" property="grade" />
     </resultMap>
 
 </mapper>

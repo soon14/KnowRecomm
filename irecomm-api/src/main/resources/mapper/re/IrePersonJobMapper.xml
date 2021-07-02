@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.k3itech.irecomm.re.entity.IrePersonJob">
-        <id column="id_num" property="idNum" />
-        <result column="name" property="name" />
-        <result column="org_code" property="orgCode" />
-        <result column="type" property="type" />
-        <result column="professional" property="professional" />
-        <result column="direction" property="direction" />
+        <id column="ID_NUM" property="idNum" />
+        <result column="NAME" property="name" />
+        <result column="ORG_CODE" property="orgCode" />
+        <result column="TYPE" property="type" />
+        <result column="PROFFESSIONAL" property="proffessional" />
+        <result column="DIRECTION" property="direction" />
     </resultMap>
 
 </mapper>
