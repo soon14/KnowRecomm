@@ -707,6 +707,79 @@ comment on column IRE_TAG_WORD.WORD is '词语'
 comment on column IRE_TAG_WORD.TAG_TYPE is '词语类型（型号、设备分系统、阶段、领域、军兵种、指标、专业方向等）'
 /
 
+
+create table IRE_PERSON_JOB
+(
+    "id_num" VARCHAR2(20) not null
+        primary key,
+    "name" VARCHAR2(255),
+    "org_code" VARCHAR2(255),
+    "type" VARCHAR2(255),
+    "professional" VARCHAR2(255),
+    "direction" VARCHAR2(255)
+)
+/
+
+comment on column IRE_PERSON_JOB."id_num" is '身份证'
+/
+
+comment on column IRE_PERSON_JOB."name" is '姓名'
+/
+
+comment on column IRE_PERSON_JOB."org_code" is '组织'
+/
+
+comment on column IRE_PERSON_JOB."type" is '类别'
+/
+
+comment on column IRE_PERSON_JOB."professional" is '专业'
+/
+
+comment on column IRE_PERSON_JOB."direction" is '方向'
+/
+
+create table IRE_TAG_STRUCTURE
+(
+    "id" NUMBER not null
+        primary key,
+    "parent_id" NUMBER,
+    "parent_ids" VARCHAR2(255),
+    "text" VARCHAR2(255),
+    "code" VARCHAR2(255),
+    "parent_code" VARCHAR2(255),
+    "parent_codes" VARCHAR2(255),
+    "leaf" NUMBER(2),
+    "grade" NUMBER(2)
+)
+/
+
+comment on column IRE_TAG_STRUCTURE."id" is '标识'
+/
+
+comment on column IRE_TAG_STRUCTURE."parent_id" is '父标识'
+/
+
+comment on column IRE_TAG_STRUCTURE."parent_ids" is '所有父标识'
+/
+
+comment on column IRE_TAG_STRUCTURE."text" is '名称'
+/
+
+comment on column IRE_TAG_STRUCTURE."code" is '编码'
+/
+
+comment on column IRE_TAG_STRUCTURE."parent_code" is '父编码'
+/
+
+comment on column IRE_TAG_STRUCTURE."parent_codes" is '所有父编码'
+/
+
+comment on column IRE_TAG_STRUCTURE."leaf" is '是否叶子节点（0根节点，1为叶子节点）'
+/
+
+comment on column IRE_TAG_STRUCTURE."grade" is '级别'
+/
+
 create sequence SEQ_RECOMMRESULT
     minvalue 1
     nomaxvalue
@@ -717,6 +790,15 @@ create sequence SEQ_RECOMMRESULT
 /
 
 create sequence SEQ_RECOMMLOG
+    minvalue 1
+    nomaxvalue
+    start with 1
+    increment by 1
+    nocache
+    order;
+/
+
+create sequence SEQ_TAG_STRUCTURE
     minvalue 1
     nomaxvalue
     start with 1

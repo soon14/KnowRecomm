@@ -133,6 +133,9 @@ public class PostServiceImpl implements PostService {
                 ApiResponse<Map<String, Object>> map = service.doPostMethod(paramVo);
                 System.out.println(map);
                 object=map.getStatus();
+                if (!object.equals(200)){
+                    return false;
+                }
                 Map<String, Object> res= (Map<String, Object>) map.getResult().get("res");
                 System.out.println("res "+res);
                 if (ObjectUtils.isNotEmpty(res)) {

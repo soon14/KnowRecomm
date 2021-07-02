@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
 import com.k3itech.irecomm.caltks.entity.SystemFile;
 import com.k3itech.irecomm.caltks.service.ISystemFileService;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
+import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
 import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
+import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserFollowService;
 import com.k3itech.service.TaskCalculateService;
 import com.k3itech.utils.ObjectUtils;
@@ -18,6 +20,7 @@ import com.k3itech.vo.*;
 import io.swagger.annotations.ApiOperation;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -51,6 +55,9 @@ public class Task2kController {
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     ISystemFileService iSystemFileService;
+
+    @Autowired
+    IIreRecommLogService iIreRecommLogService;
 
     @Value("${knowledge.url}")
     private String knowledgeurl;
@@ -77,6 +84,7 @@ public class Task2kController {
             TaskRecommResults recommResults = jsonObject.toJavaObject(TaskRecommResults.class);
             recommResultList = recommResults.getRecommResults();
         }
+        List<String> ids = new ArrayList<>();
             Collections.sort(recommResultList);
             for (RecommResult recommResult : recommResultList) {
                 IreKnowledgeInfo iKnowledgeInfo = recommResult.getInfo();
@@ -91,6 +99,7 @@ public class Task2kController {
 
                    knowledgeResult.setFileType(systemFile.getFileType());
                }*/
+              ids.add(iKnowledgeInfo.getSourceId());
                 knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");
                 knowledgeResults.add(knowledgeResult);
@@ -100,6 +109,16 @@ public class Task2kController {
             }
         Map<String,Object> map = new HashMap<>();
             map.put("data",knowledgeResults);
+//记录推荐日志，根据idnum为用户身份证号+任务名来区分
+        IreRecommLog ireRecommLog = new IreRecommLog();
+        ireRecommLog.setIdNum(param.getUserPId()+"-"+param.getTaskName());
+        ireRecommLog.setKnowledge(StringUtils.join(ids, ","));
+        Date day = new Date();
+        Timestamp localDateTime = new Timestamp(day.getTime());
+
+        ireRecommLog.setPostTime(localDateTime);
+
+        iIreRecommLogService.save(ireRecommLog);
 
         return TaskResult.ok(map);
 

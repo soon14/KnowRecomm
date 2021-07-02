@@ -52,7 +52,7 @@ public class MybatisGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
 //        String projectPath = System.getProperty("user.dir");
-        String projectPath = "D:\\工作\\项目\\航天二院\\new\\irecomm\\irecomm-api";
+        String projectPath = "D:\\工作\\项目\\航天二院\\new\\github\\irecomm-api";
         System.out.println(projectPath);
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("jobob");
@@ -191,30 +191,32 @@ public class MybatisGenerator {
        Map<String,List<String>> modeltable = new HashMap<>();
        List<String> caltks=new ArrayList<>();
 //               ["CALTKS_DK_ZHILIANGWENTIANLI","CALTKS_META_KNOWLEDGE","CALTKS_SYSTEM_FILE"];
-       caltks.add("CALTKS_DK_ZHILIANGWENTIANLI");
+    /*   caltks.add("CALTKS_DK_ZHILIANGWENTIANLI");
        caltks.add("CALTKS_META_KNOWLEDGE");
        caltks.add("CALTKS_SYSTEM_FILE");
         caltks.add("CALTKS_TREE_NODE");
-        modeltable.put("caltks",caltks);
+        modeltable.put("caltks",caltks);*/
         List<String> recomm=new ArrayList<>();
-        recomm.add("IRE_TAG_WORD");
+       /* recomm.add("IRE_TAG_WORD");
         recomm.add("IRE_KNOWLEDGE_INFO");
         recomm.add("IRE_USER_ACTION");
         recomm.add("IRE_USER_FOLLOW");
         recomm.add("IRE_USER_INFO");
         recomm.add("IRE_USER_RECOMMRESULT");
-        recomm.add("IRE_RECOMM_LOG");
-        recomm.add("ETL_TEMP");
+        recomm.add("IRE_RECOMM_LOG");*/
+//        recomm.add("ETL_TEMP");
 //        recomm.add("USER_POST");
-        recomm.add("PERSON_POST");
+        recomm.add("IRE_PERSON_JOB");
+        recomm.add("IRE_TAG_STRUCTURE");
+
         modeltable.put("re", recomm);
-        List<String> yunque=new ArrayList<>();
+      /*  List<String> yunque=new ArrayList<>();
         yunque.add("ADMIN_GATELOG");
         yunque.add("ADMIN_ORG");
         yunque.add("ADMIN_USER");
         yunque.add("ZZ_MESSAGE_INFO");
 
-        modeltable.put("yunque", yunque);
+        modeltable.put("yunque", yunque);*/
 
         for (Map.Entry<String,List<String>> entry:modeltable.entrySet() ) {
             System.out.println("entrykey:"+entry.getKey()+"   valuesize:"+entry.getValue().size());
