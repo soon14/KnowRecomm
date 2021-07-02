@@ -5,10 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hankcs.hanlp.summary.TextRankKeyword;
 import com.k3itech.irecomm.caltks.entity.SystemFile;
-import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
-import com.k3itech.irecomm.re.entity.IreTagWord;
-import com.k3itech.irecomm.re.entity.IreUserFollow;
-import com.k3itech.irecomm.re.entity.PersonPost;
+import com.k3itech.irecomm.re.entity.*;
+import com.k3itech.irecomm.re.service.IIrePersonJobService;
 import com.k3itech.irecomm.re.service.IIreTagWordService;
 import com.k3itech.irecomm.re.service.IPersonPostService;
 import com.k3itech.service.TaskCalculateService;
@@ -67,7 +65,8 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
     private IIreTagWordService iiTagWordService;
 
     @Autowired
-    private IPersonPostService iPersonPostService;
+//    private IPersonPostService iPersonPostService;
+    private IIrePersonJobService iIrePersonJobService;
 
     /**
      * 计算任务的知识匹配结果
@@ -92,10 +91,12 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
 
         log.info("tagresultsize: " + result.size());
         if (result.size() < RESULTSIZE) {
-            PersonPost personPost=iPersonPostService.getById(taskParam.getUserPId());
+//            PersonPost personPost=iPersonPostService.getById(taskParam.getUserPId());
+            IrePersonJob personPost=iIrePersonJobService.getById(taskParam.getUserPId());
             String uesrjob = "";
             if (ObjectUtils.isNotEmpty(personPost)){
-                uesrjob=personPost.getVdefl();
+//                uesrjob=personPost.getVdefl();
+                uesrjob=personPost.getProfessional()+personPost.getDirection();
             }
             List<RecommResult> simresults= getSimilaryResult(uesrjob+taskParam.getTaskName()+taskParam.getProjectName(), iKnowledgeInfos);
             if (ObjectUtils.isNotEmpty(simresults)){
