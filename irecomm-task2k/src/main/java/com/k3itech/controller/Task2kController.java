@@ -9,9 +9,11 @@ import com.k3itech.irecomm.caltks.service.ISystemFileService;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
+import com.k3itech.irecomm.re.entity.IreUserRecommresult;
 import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserFollowService;
+import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
 import com.k3itech.service.TaskCalculateService;
 import com.k3itech.service.impl.ServerConfig;
 import com.k3itech.utils.ObjectUtils;
@@ -61,6 +63,8 @@ public class Task2kController {
     IIreRecommLogService iIreRecommLogService;
     @Autowired
     private ServerConfig serverConfig;
+    @Autowired
+    IIreUserRecommresultService iIreUserRecommresultService;
 
     @Value("${knowledge.url}")
     private String knowledgeurl;
@@ -105,7 +109,7 @@ public class Task2kController {
               ids.add(iKnowledgeInfo.getSourceId());
                 knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");
-                knowledgeResult.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+param.getTaskName()+"-"+param.getUserPId()+"&islike=");
+                knowledgeResult.setCallback(serverConfig.getUrl()+"/irecommtask2k/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+param.getTaskName()+"-"+param.getUserPId()+"&islike=");
                 knowledgeResults.add(knowledgeResult);
                 if (knowledgeResults.size()==3){
                     break;
@@ -125,6 +129,26 @@ public class Task2kController {
         iIreRecommLogService.save(ireRecommLog);
 
         return TaskResult.ok(map);
+
+
+    }
+
+    @GetMapping("/getCallback")
+    @ApiOperation(value = "获取用户喜好返回信息")
+    @ResponseBody
+    public Object getCallback(CallBackParam callBackParam){
+
+        IreUserRecommresult ireUserRecommresult= new IreUserRecommresult();
+        ireUserRecommresult.setIdNum(callBackParam.getPid());
+        ireUserRecommresult.setIslike(callBackParam.getIslike()+"");
+        Date day = new Date();
+        Timestamp localDateTime = new Timestamp(day.getTime());
+        ireUserRecommresult.setUpdateTime(localDateTime);
+        boolean flag=iIreUserRecommresultService.save(ireUserRecommresult);
+        if (!flag){
+            return R.failed();
+        }
+        return R.ok();
 
 
     }
