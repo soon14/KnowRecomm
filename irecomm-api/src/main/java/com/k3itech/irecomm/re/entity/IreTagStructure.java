@@ -1,6 +1,8 @@
 package com.k3itech.irecomm.re.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -19,6 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@KeySequence("SEQ_TAG_STRUCTURE")
 @TableName("IRE_TAG_STRUCTURE")
 public class IreTagStructure extends Model<IreTagStructure> {
 

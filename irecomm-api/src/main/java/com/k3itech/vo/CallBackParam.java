@@ -13,7 +13,7 @@ import lombok.Data;
 public class CallBackParam {
     @ApiModelProperty(value = "知识id")
     private String md5id;
-    @ApiModelProperty(value = "用户操作，0喜欢，1收藏，2点击")
+    @ApiModelProperty(value = "用户操作，0喜欢，1不喜欢，2点击")
     private int islike;
     @ApiModelProperty(value = "用户证件号")
     private String pid;

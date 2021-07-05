@@ -89,7 +89,7 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRsource(recommResult.getTags());
                 recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
                 recommContents.add(recommContent);
                 ids.add(iKnowledgeInfo.getSourceId());
 

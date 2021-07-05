@@ -13,6 +13,7 @@ import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserFollowService;
 import com.k3itech.service.TaskCalculateService;
+import com.k3itech.service.impl.ServerConfig;
 import com.k3itech.utils.ObjectUtils;
 import com.k3itech.utils.R;
 import com.k3itech.utils.SecretLevel;
@@ -58,6 +59,8 @@ public class Task2kController {
 
     @Autowired
     IIreRecommLogService iIreRecommLogService;
+    @Autowired
+    private ServerConfig serverConfig;
 
     @Value("${knowledge.url}")
     private String knowledgeurl;
@@ -102,6 +105,7 @@ public class Task2kController {
               ids.add(iKnowledgeInfo.getSourceId());
                 knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");
+                knowledgeResult.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+param.getTaskName()+"-"+param.getUserPId()+"&islike=");
                 knowledgeResults.add(knowledgeResult);
                 if (knowledgeResults.size()==3){
                     break;

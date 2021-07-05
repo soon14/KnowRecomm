@@ -45,7 +45,7 @@ public class TaskResult<T> implements Serializable {
     }
 
     public static <T> TaskResult<T> ok(T result) {
-        return restResult(result, 200, null);
+        return restResult(result, 200, "查询成功");
     }
 
     public static <T> TaskResult<T> ok(T data, String msg) {

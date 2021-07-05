@@ -13,10 +13,13 @@ public class KnowledgeResult {
     @ApiModelProperty(value = "文件类型 .doc")
     public String fileType;
     @ApiModelProperty(value = "作者")
-    public String author;
+    public String author="云雀";
     @ApiModelProperty(value = "来源，PDM/知识管理")
-    public String source;
+    public String source="知识";
     @ApiModelProperty(value = "下载地址")
     public String path;
+    @ApiModelProperty(value = "回调地址（提交点击结果）")
+    public String callback;
+
 
 }
