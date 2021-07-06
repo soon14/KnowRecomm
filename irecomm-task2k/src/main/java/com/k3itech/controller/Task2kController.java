@@ -106,6 +106,16 @@ public class Task2kController {
 
                    knowledgeResult.setFileType(systemFile.getFileType());
                }*/
+                QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
+                //                用户反馈结果为不喜欢的
+                ireUserRecommresultQueryWrapper.like("ID_NUM", param.getUserPId()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",1);
+                List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
+                if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
+                    log.info(iKnowledgeInfo.getSourceId() + " user "+param.getUserPId()+" dislike");
+                    continue;
+                }
+
+
               ids.add(iKnowledgeInfo.getSourceId());
                 knowledgeResult.setPath(iKnowledgeInfo.getUrl());
                 knowledgeResult.setSource("知识管理系统");

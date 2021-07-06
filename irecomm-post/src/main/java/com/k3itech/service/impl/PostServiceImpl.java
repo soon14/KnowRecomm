@@ -8,7 +8,9 @@ import com.k3itech.api.fein.YunqueClient;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
+import com.k3itech.irecomm.re.entity.IreUserRecommresult;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
+import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
 import com.k3itech.service.PostService;
 import com.k3itech.utils.CommonConstants;
 import com.k3itech.utils.ObjectUtils;
@@ -48,6 +50,9 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private IIreRecommLogService iIreRecommLogService;
     @Autowired
+    private IIreUserRecommresultService iIreUserRecommresultService;
+
+    @Autowired
     private ServerConfig serverConfig;
 
     @Value("${yunque.url}")
@@ -73,6 +78,16 @@ public class PostServiceImpl implements PostService {
                 ireRecommLogQueryWrapper.eq("ID_NUM", iUserFollow.getIdNum());
                 ireRecommLogQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
                 List<IreRecommLog> ireRecommLogs = iIreRecommLogService.list(ireRecommLogQueryWrapper);
+
+                QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
+//                用户反馈结果为不喜欢的
+                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",1);
+                List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
+                if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
+                    log.info(iKnowledgeInfo.getSourceId() + " user "+iUserFollow.getIdNum()+" dislike");
+                    continue;
+                }
+
                 if (ObjectUtils.isNotEmpty(ireRecommLogs)) {
                     log.info(iKnowledgeInfo.getSourceId() + " has posted");
                     continue;
@@ -197,8 +212,19 @@ public class PostServiceImpl implements PostService {
                 ireRecommLogQueryWrapper.eq("ID_NUM", iUserFollow.getIdNum());
                 ireRecommLogQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
                 List<IreRecommLog> ireRecommLogs = iIreRecommLogService.list(ireRecommLogQueryWrapper);
+
+                QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
+//                用户反馈结果为不喜欢的
+                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",1);
+//                ireUserRecommresultQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
+                List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
                 if (ObjectUtils.isNotEmpty(ireRecommLogs)) {
                     log.info(iKnowledgeInfo.getSourceId() + " has posted");
+                    continue;
+                }
+
+                if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
+                    log.info(iKnowledgeInfo.getSourceId() + " user "+iUserFollow.getIdNum()+" dislike");
                     continue;
                 }
                 log.debug("recommresult: " + recommResult.getInfo());
@@ -213,7 +239,7 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRsource(recommResult.getTags());
                 recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getcallback/?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
+                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
 
                 recommContents.add(recommContent);
 
