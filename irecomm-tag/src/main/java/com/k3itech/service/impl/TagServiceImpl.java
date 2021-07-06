@@ -194,7 +194,9 @@ public class TagServiceImpl implements TagService {
     public void tagUsers() {
         QueryWrapper<AdminUser> orgqueryWrapper= new QueryWrapper();
         for (String org:orgcode.split(SPLITCHR)) {
-            orgqueryWrapper.like("ORG_CODE",org).or(true);
+//            orgqueryWrapper.like("ORG_CODE",org).or(true);
+            orgqueryWrapper.apply("ORG_CODE"+" like {0} ",org).or(true);
+
         }
         orgqueryWrapper.and(wrapper ->wrapper.ne("ISDEL",ISDEL).or().isNull("ISDEL"));
         List<AdminUser> users= iAdminUserService.list(orgqueryWrapper);

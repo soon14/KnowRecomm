@@ -101,7 +101,7 @@ public class PostController {
         log.info("start post ");
         QueryWrapper<IreUserFollow> orgqueryWrapper= new QueryWrapper();
         for (String org:orgcode.split(SPLITCHR)) {
-            orgqueryWrapper.like("ORG_CODE",org).or(true);
+            orgqueryWrapper.apply("ORG_CODE"+" like {0}",org).or(true);
         }
         List<IreUserFollow> ireUserFollows = iIreUserFollowService.list(orgqueryWrapper);
         for (IreUserFollow ireUserFollow:ireUserFollows){
