@@ -620,18 +620,29 @@ comment on column ZZ_MESSAGE_INFO.ISDEL is '删除标志'
 
 create table IRE_RECOMM_LOG
 (
-    ID        NUMBER(20) not null
+    ID NUMBER(20) not null
         constraint I_RECOMM_LOG_PK
             primary key,
-    ID_NUM    VARCHAR2(20),
+    ID_NUM VARCHAR2(20),
     KNOWLEDGE VARCHAR2(255),
     POST_TIME TIMESTAMP(6),
-    KTYPE     VARCHAR2(255)
+    KTYPE VARCHAR2(255),
+    STATUS VARCHAR2(2)
 )
+/
+
+comment on column IRE_RECOMM_LOG.ID_NUM is '设分支'
+/
+
+comment on column IRE_RECOMM_LOG.KNOWLEDGE is '知识ids'
 /
 
 comment on column IRE_RECOMM_LOG.POST_TIME is '推送时间'
 /
+
+comment on column IRE_RECOMM_LOG.STATUS is '状态0成功，1失败'
+/
+
 
 create table ETL_TEMP
 (

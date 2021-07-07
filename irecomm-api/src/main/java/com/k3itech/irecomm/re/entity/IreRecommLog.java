@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author jobob
- * @since 2021-06-04
+ * @since 2021-07-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,9 +31,15 @@ public class IreRecommLog extends Model<IreRecommLog> {
     @TableId("ID")
     private BigDecimal id;
 
+    /**
+     * 设分支
+     */
     @TableField("ID_NUM")
     private String idNum;
 
+    /**
+     * 知识ids
+     */
     @TableField("KNOWLEDGE")
     private String knowledge;
 
@@ -45,6 +51,12 @@ public class IreRecommLog extends Model<IreRecommLog> {
 
     @TableField("KTYPE")
     private String ktype;
+
+    /**
+     * 状态0成功，1失败
+     */
+    @TableField("STATUS")
+    private String status;
 
 
     @Override

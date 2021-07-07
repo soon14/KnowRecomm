@@ -9,6 +9,7 @@
         <result column="KNOWLEDGE" property="knowledge" />
         <result column="POST_TIME" property="postTime" />
         <result column="KTYPE" property="ktype" />
+        <result column="STATUS" property="status" />
     </resultMap>
 
 </mapper>

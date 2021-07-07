@@ -42,6 +42,7 @@ public class PostJob extends QuartzJobBean {
         if (ObjectUtils.isNotEmpty(flag)&&flag.equalsIgnoreCase(CommonConstants.CALC_OVER_FLG)){
 
             log.info("start post ");
+            redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.POST_ING_FLG);
             QueryWrapper<IreUserFollow> orgqueryWrapper= new QueryWrapper();
             for (String org:orgcode.split(SPLITCHR)) {
 //                orgqueryWrapper.like("ORG_CODE",org).or(true);

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author jobob
- * @since 2021-06-04
+ * @since 2021-07-06
  */
 public interface IIreRecommLogService extends IService<IreRecommLog> {
 

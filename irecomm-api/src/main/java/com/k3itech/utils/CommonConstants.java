@@ -34,4 +34,12 @@ public interface CommonConstants {
     String TAG_ING_FLG="TAG_ING_FLG";
     String TAG_OVER_FLG="TAG_OVER_FLG";
     String POST_OVER_FLG="POST_OVER_FLG";
+    String POST_ING_FLG="POST_ING_FLG";
+
+    String ISLIKE_LIKE="0";
+    String ISLIKE_CLIKE="2";
+    String ISLIKE_DISLIKE="1";
+
+    String STATUS_SUCCESS = "0";
+    String STATUS_FAIL = "1";
 }

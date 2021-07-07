@@ -3,8 +3,6 @@ package com.k3itech.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.k3itech.IRecommApplicationPost;
-import com.k3itech.api.fein.YunqueClient;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
@@ -12,9 +10,7 @@ import com.k3itech.irecomm.re.entity.IreUserRecommresult;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
 import com.k3itech.service.PostService;
-import com.k3itech.utils.CommonConstants;
-import com.k3itech.utils.ObjectUtils;
-import com.k3itech.utils.SecretLevel;
+import com.k3itech.utils.*;
 import com.k3itech.vo.RecommContent;
 import com.k3itech.vo.RecommResult;
 import com.k3itech.vo.RecommResults;
@@ -45,8 +41,7 @@ public class PostServiceImpl implements PostService {
     final static Integer POSTNUM = 5;
     @Resource
     private RedisTemplate<String, String> redisTemplate;
-    @Autowired
-    private YunqueClient yunqueClient;
+
     @Autowired
     private IIreRecommLogService iIreRecommLogService;
     @Autowired
@@ -60,63 +55,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean postKnowledge(IreUserFollow iUserFollow) {
-        String key = JSON.toJSONString(iUserFollow);
-        String json = redisTemplate.boundValueOps(key).get();
-        log.info("json: " + json);
+        boolean flag=true;
         List<String> ids = new ArrayList<>();
-        if (ObjectUtils.isEmpty(json)) {
+        List<RecommContent> recommContents = new ArrayList<>();
 
-        } else {
-            JSONObject jsonObject = JSON.parseObject(json);
-            RecommResults recommResults = jsonObject.toJavaObject(RecommResults.class);
-            List<RecommResult> recommResultList = recommResults.getRecommResults();
-            Collections.sort(recommResultList);
-            List<RecommContent> recommContents = new ArrayList<>();
-            for (RecommResult recommResult : recommResultList) {
-                IreKnowledgeInfo iKnowledgeInfo = recommResult.getInfo();
-                QueryWrapper<IreRecommLog> ireRecommLogQueryWrapper = new QueryWrapper<>();
-                ireRecommLogQueryWrapper.eq("ID_NUM", iUserFollow.getIdNum());
-                ireRecommLogQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
-                List<IreRecommLog> ireRecommLogs = iIreRecommLogService.list(ireRecommLogQueryWrapper);
+        setRecommresults(iUserFollow,recommContents,ids,true);
 
-                QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
-//                用户反馈结果为不喜欢的
-                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",1);
-                List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
-                if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
-                    log.info(iKnowledgeInfo.getSourceId() + " user "+iUserFollow.getIdNum()+" dislike");
-                    continue;
-                }
-
-                if (ObjectUtils.isNotEmpty(ireRecommLogs)) {
-                    log.info(iKnowledgeInfo.getSourceId() + " has posted");
-                    continue;
-                }
-                log.debug("recommresult: " + recommResult.getInfo());
-                RecommContent recommContent = new RecommContent();
-                String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
-                recommContent.setUrl(url);
-                recommContent.setTitle(iKnowledgeInfo.getTitle());
-                recommContent.setAuthor(iKnowledgeInfo.getAuthor());
-                recommContent.setDomain(iKnowledgeInfo.getDomain());
-                recommContent.setRelevancy(recommResult.getScore());
-                recommContent.setSource("0");
-                recommContent.setRsource(recommResult.getTags());
-                recommContent.setBz(recommResult.getType());
-                recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
-                recommContents.add(recommContent);
-                ids.add(iKnowledgeInfo.getSourceId());
-
-                if (recommContents.size() == POSTNUM) {
-                    break;
-                }
-
-
-            }
-            Object object = null;
-            Object message = null;
-            Object status = null;
             if (ObjectUtils.isNotEmpty(recommContents)) {
 //                云雀协议封装
 
@@ -128,44 +72,8 @@ public class PostServiceImpl implements PostService {
                 yunqueContent.setLevel(SecretLevel.getSecretLevelsByUserLevel(iUserFollow.getSecretLevel()));
 
                 log.info("post recommComments；" + recommContents.toString());
-
-                OpenApiService service = new OpenApiService();
-                NoticeRequest request= new NoticeRequest();
-                request.setMsgContent(yunqueContent.getMsgContent());
-                request.setReceiverId(yunqueContent.getReceiverId());
-                request.setReceiverName(yunqueContent.getReceiverName());
-                request.setNoticeLevel(yunqueContent.getLevel());
-                request.setSenderOrgName(yunqueContent.getSenderOrgName());
-                request.setBz(yunqueContent.getBz());
-                request.setSenderType(yunqueContent.getSenderType());
-                OpenApiRequestParamVo paramVo = new OpenApiRequestParamVo();
-                paramVo.setApiUrl("/openApi/service");
-                paramVo.setServiceId("AvRqvvAY");
-
-
-                paramVo.setRequestBody(request);
-                paramVo.setToken("oeadmOczKMmUw2jnDoimdSZEWIAHqTxDwDkYiBy9uPscrLHx");
-                ApiResponse<Map<String, Object>> map = service.doPostMethod(paramVo);
-                System.out.println(map);
-                object=map.getStatus();
-                if (!object.equals(200)){
-                    return false;
-                }
-                Map<String, Object> res= (Map<String, Object>) map.getResult().get("res");
-                System.out.println("res "+res);
-                if (ObjectUtils.isNotEmpty(res)) {
-                    message = res.get("message");
-                    System.out.println(message);
-                    status = res.get("status");
-                    System.out.println(status);
-                }
-
-
-
-//                object = yunqueClient.postMessage(yunqueContent);
-            }
-//             调用成功，则记录推荐流水，下次不再推荐
-            if (ObjectUtils.isNotEmpty(object) &&ObjectUtils.isNotEmpty(status)&&ObjectUtils.isNotEmpty(message)&&status.equals(200)&&message.equals("操作成功")) {
+                YunqueClient yunqueClient = new YunqueClient();
+                flag=yunqueClient.sendMessage(yunqueContent);
                 IreRecommLog ireRecommLog = new IreRecommLog();
                 ireRecommLog.setIdNum(iUserFollow.getIdNum());
                 ireRecommLog.setKnowledge(StringUtils.join(ids, ","));
@@ -173,17 +81,26 @@ public class PostServiceImpl implements PostService {
                 Timestamp localDateTime = new Timestamp(day.getTime());
 
                 ireRecommLog.setPostTime(localDateTime);
+//             调用成功，则记录推荐流水，下次不再推荐
+                if (flag) {
+
+                    ireRecommLog.setStatus(CommonConstants.STATUS_SUCCESS);
+
+                } else {
+                    ireRecommLog.setStatus(CommonConstants.STATUS_FAIL);
+                    flag = false;
+                }
 
                 iIreRecommLogService.save(ireRecommLog);
-            }else if (ObjectUtils.isNotEmpty(object)){
-                return false;
+
             }
 
 
 
 
-        }
-        return true;
+
+
+        return flag;
 
 
     }
@@ -193,12 +110,21 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public  List<RecommContent> getKnowledge(IreUserFollow iUserFollow) {
-        String key = JSON.toJSONString(iUserFollow);
-        List<RecommContent> recommContents = new ArrayList<>();
 
+        List<RecommContent> recommContents = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
+
+        setRecommresults(iUserFollow,recommContents,ids,false);
+
+        return recommContents;
+
+
+    }
+
+    public void setRecommresults(IreUserFollow iUserFollow, List<RecommContent> recommContents,  List<String> ids,boolean flag){
+        String key = JSON.toJSONString(iUserFollow);
         String json = redisTemplate.boundValueOps(key).get();
         log.info("json: " + json);
-        List<String> ids = new ArrayList<>();
         if (ObjectUtils.isEmpty(json)) {
 
         } else {
@@ -209,14 +135,13 @@ public class PostServiceImpl implements PostService {
             for (RecommResult recommResult : recommResultList) {
                 IreKnowledgeInfo iKnowledgeInfo = recommResult.getInfo();
                 QueryWrapper<IreRecommLog> ireRecommLogQueryWrapper = new QueryWrapper<>();
-                ireRecommLogQueryWrapper.eq("ID_NUM", iUserFollow.getIdNum());
+                ireRecommLogQueryWrapper.eq("ID_NUM", iUserFollow.getIdNum()).eq("STATUS",CommonConstants.STATUS_SUCCESS);
                 ireRecommLogQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
                 List<IreRecommLog> ireRecommLogs = iIreRecommLogService.list(ireRecommLogQueryWrapper);
 
                 QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
 //                用户反馈结果为不喜欢的
-                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",1);
-//                ireUserRecommresultQueryWrapper.and(wrapper -> wrapper.like("KNOWLEDGE", iKnowledgeInfo.getSourceId()).or().like("KNOWLEDGE", iKnowledgeInfo.getSourceId() + ",%").or().like("KNOWLEDGE", "%," + iKnowledgeInfo.getSourceId()));
+                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",CommonConstants.ISLIKE_DISLIKE);
                 List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
                 if (ObjectUtils.isNotEmpty(ireRecommLogs)) {
                     log.info(iKnowledgeInfo.getSourceId() + " has posted");
@@ -229,7 +154,8 @@ public class PostServiceImpl implements PostService {
                 }
                 log.debug("recommresult: " + recommResult.getInfo());
                 RecommContent recommContent = new RecommContent();
-                String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
+//                String url = knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + iUserFollow.getIdNum() + "&flag=client ";
+                String url= PostUtils.getKnowledgeURL(knowledgeurl,iKnowledgeInfo.getSourceId(),iUserFollow.getIdNum() );
                 recommContent.setUrl(url);
                 recommContent.setTitle(iKnowledgeInfo.getTitle());
                 recommContent.setAuthor(iKnowledgeInfo.getAuthor());
@@ -239,9 +165,14 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRsource(recommResult.getTags());
                 recommContent.setBz(recommResult.getType());
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
-                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
-
+//                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
+                recommContent.setCallback(PostUtils.getCallBackURL("irecommpost",serverConfig.getUrl(),iKnowledgeInfo.getSourceId(),iUserFollow.getIdNum(),""));
                 recommContents.add(recommContent);
+                ids.add(iKnowledgeInfo.getSourceId());
+                if (flag&&recommContents.size() == POSTNUM){
+                    break;
+
+                }
 
 
 
@@ -252,9 +183,6 @@ public class PostServiceImpl implements PostService {
 
 
         }
-        return recommContents;
-
-
     }
 
 

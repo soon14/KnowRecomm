@@ -202,12 +202,12 @@ public class MybatisGenerator {
         recomm.add("IRE_USER_ACTION");
         recomm.add("IRE_USER_FOLLOW");
         recomm.add("IRE_USER_INFO");
-        recomm.add("IRE_USER_RECOMMRESULT");
-        recomm.add("IRE_RECOMM_LOG");*/
+        recomm.add("IRE_USER_RECOMMRESULT");*/
+        recomm.add("IRE_RECOMM_LOG");
 //        recomm.add("ETL_TEMP");
 //        recomm.add("USER_POST");
-        recomm.add("IRE_PERSON_JOB");
-        recomm.add("IRE_TAG_STRUCTURE");
+//        recomm.add("IRE_PERSON_JOB");
+//        recomm.add("IRE_TAG_STRUCTURE");
 
         modeltable.put("re", recomm);
       /*  List<String> yunque=new ArrayList<>();

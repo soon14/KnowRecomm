@@ -1,11 +1,15 @@
 package com.k3itech.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
 import com.k3itech.irecomm.re.entity.IreUserRecommresult;
+import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserFollowService;
 import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
 import com.k3itech.service.PostService;
+import com.k3itech.service.RedisService;
+import com.k3itech.utils.CommonConstants;
 import com.k3itech.utils.ObjectUtils;
 import com.k3itech.utils.R;
 import com.k3itech.vo.CallBackParam;
@@ -19,10 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:dell
@@ -39,7 +40,13 @@ public class PostController {
     private IIreUserFollowService iIreUserFollowService;
 
     @Autowired
+    private RedisService redisService;
+
+    @Autowired
     private IIreUserRecommresultService iIreUserRecommresultService;
+
+    @Autowired
+    private IIreRecommLogService iIreRecommLogService;
 
     @Value("${calc.orgcode}")
     private String orgcode;
@@ -79,6 +86,7 @@ public class PostController {
 
         IreUserRecommresult ireUserRecommresult= new IreUserRecommresult();
         ireUserRecommresult.setIdNum(callBackParam.getPid());
+        ireUserRecommresult.setKnowledge(callBackParam.getMd5id());
         ireUserRecommresult.setIslike(callBackParam.getIslike()+"");
         Date day = new Date();
         Timestamp localDateTime = new Timestamp(day.getTime());
@@ -103,14 +111,52 @@ public class PostController {
         for (String org:orgcode.split(SPLITCHR)) {
             orgqueryWrapper.apply("ORG_CODE"+" like {0}",org).or(true);
         }
+        List<String> userids= new ArrayList<>();
         List<IreUserFollow> ireUserFollows = iIreUserFollowService.list(orgqueryWrapper);
         for (IreUserFollow ireUserFollow:ireUserFollows){
            boolean postresult = postService.postKnowledge(ireUserFollow);
             if (!postresult){
-
+                userids.add(ireUserFollow.getIdNum());
             }
         }
-        return R.ok();
+        redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.POST_OVER_FLG);
+        if (ObjectUtils.isNotEmpty(userids)){
+            return R.failed(userids,"以下用户云雀消息发送失败");
+        }
+
+        return R.ok("发送成功");
+
+
+    }
+
+    @GetMapping("/postfailmessage")
+    @ApiOperation(value = "失败补发")
+    @ResponseBody
+    public Object postFailMessage(){
+
+        log.info("start post failmessage");
+        QueryWrapper<IreRecommLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("STATUS",CommonConstants.STATUS_FAIL)
+                .notInSql("(ID_NUM,KNOWLEDGE)","SELECT ID_NUM,KNOWLEDGE  FROM IRE_RECOMM_LOG WHERE STATUS='0'");
+        List<String> success= new ArrayList<>();
+        List<String> fail= new ArrayList<>();
+        List<IreRecommLog> recommLogs=iIreRecommLogService.list(queryWrapper);
+        for (IreRecommLog recommLog:recommLogs) {
+            IreUserFollow ireUserFollow=iIreUserFollowService.getById(recommLog.getIdNum());
+           boolean flag= postService.postKnowledge(ireUserFollow);
+           if (flag){
+               success.add(ireUserFollow.getIdNum());
+           }else {
+               fail.add(ireUserFollow.getIdNum());
+           }
+        }
+        Map<String,List<String>> result= new HashMap<>();
+        result.put("补发成功",success);
+        result.put("补发失败",fail);
+
+        redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.POST_OVER_FLG);
+
+        return R.ok(result);
 
 
     }
