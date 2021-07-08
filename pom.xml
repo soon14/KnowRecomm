@@ -25,6 +25,7 @@
 		<module>irecomm-calc</module>
 		<module>irecomm-tag</module>
         <module>irecomm-task2k</module>
+		<module>irecomm-evaluate</module>
 		<module>spring-cloud-eureka-server</module>
 		<module>irecomm-webservice</module>
 <!--		<module>irecomm-webserviceclient</module>-->

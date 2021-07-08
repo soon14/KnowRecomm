@@ -14,7 +14,7 @@ public class PostUtils {
     public static String getCallBackURL(String urlinterface,String ipport,String knowledgeid,String userid,String taskname){
         String url = "/"+urlinterface+"/getCallback?md5id="+knowledgeid+"&pid="+userid+"&islike=";
         if (ObjectUtils.isNotEmpty(taskname)) {
-            url = "/" + urlinterface + "/getCallback?md5id=" + knowledgeid + "&pid=" + taskname + "-" + userid + "&islike=";
+            url = "/" + urlinterface + "/getCallback?md5id=" + knowledgeid + "&pid=" + userid + "-" + taskname + "&islike=";
         }
 
         return url;

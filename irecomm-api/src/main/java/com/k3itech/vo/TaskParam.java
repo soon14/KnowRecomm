@@ -22,6 +22,5 @@ public class TaskParam {
     @ApiModelProperty(value = "任务输出数据项名称集合 如：”输出项一，输出项二，输出项三”")
     private String outputData;
     @ApiModelProperty(value = "任务关联工具名称集合 如：”工具一，工具二”")
-
     private String tools;
 }
