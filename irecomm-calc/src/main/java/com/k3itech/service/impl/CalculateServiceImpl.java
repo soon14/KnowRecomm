@@ -32,7 +32,7 @@ public class CalculateServiceImpl implements CalculateService {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
-    @Value("${calc.redis.timeout}")
+    @Value("${calc.redis.timeout:8}")
     private long timeout;
 
 

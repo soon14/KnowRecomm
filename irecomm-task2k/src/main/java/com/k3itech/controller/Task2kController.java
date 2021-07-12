@@ -94,7 +94,9 @@ public class Task2kController {
         for (RecommResult recommResult : recommResultList) {
             IreKnowledgeInfo iKnowledgeInfo = recommResult.getInfo();
             KnowledgeResult knowledgeResult = new KnowledgeResult();
-            knowledgeResult.setAuthor(iKnowledgeInfo.getAuthor());
+            if (ObjectUtils.isNotEmpty(iKnowledgeInfo.getAuthor())) {
+                knowledgeResult.setAuthor(iKnowledgeInfo.getAuthor());
+            }
             knowledgeResult.setFileName(iKnowledgeInfo.getTitle());
 //                iKnowledgeInfo.setUrl( knowledgeurl + "/giksp/ui!clientsearch.action?kid=" + iKnowledgeInfo.getSourceId() + "&kname=&j_username=" + param.getUserPId() + "&flag=client ");
             String url = PostUtils.getKnowledgeURL(knowledgeurl, iKnowledgeInfo.getSourceId(), param.getUserPId());

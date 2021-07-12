@@ -37,9 +37,11 @@ public interface CommonConstants {
     String POST_ING_FLG="POST_ING_FLG";
 
     String ISLIKE_LIKE="0";
-    String ISLIKE_CLIKE="2";
+    String ISLIKE_CLICK="2";
     String ISLIKE_DISLIKE="1";
 
     String STATUS_SUCCESS = "0";
     String STATUS_FAIL = "1";
+
+    String POST_TIMES="POST_TIMES";
 }

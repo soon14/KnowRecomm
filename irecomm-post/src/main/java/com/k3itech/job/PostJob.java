@@ -39,7 +39,9 @@ public class PostJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         String flag = redisService.get(CommonConstants.DEAL_FLAG);
         boolean postresult=true;
-        if (ObjectUtils.isNotEmpty(flag)&&flag.equalsIgnoreCase(CommonConstants.CALC_OVER_FLG)){
+        if (ObjectUtils.isNotEmpty(flag)
+                &&flag.equalsIgnoreCase(CommonConstants.CALC_OVER_FLG)
+        ){
 
             log.info("start post ");
             redisService.set(CommonConstants.DEAL_FLAG, CommonConstants.POST_ING_FLG);

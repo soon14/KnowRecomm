@@ -30,11 +30,11 @@ public class RecommContent {
     /**
      * 作者
      */
-    private String author;
+    private String author="云雀";
     /**
      * 领域
      */
-    private String domain;
+    private String domain="航空航天";
     /**
      * 推荐源
      */

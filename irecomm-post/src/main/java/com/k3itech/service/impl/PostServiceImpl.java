@@ -158,8 +158,12 @@ public class PostServiceImpl implements PostService {
                 String url= PostUtils.getKnowledgeURL(knowledgeurl,iKnowledgeInfo.getSourceId(),iUserFollow.getIdNum() );
                 recommContent.setUrl(url);
                 recommContent.setTitle(iKnowledgeInfo.getTitle());
-                recommContent.setAuthor(iKnowledgeInfo.getAuthor());
-                recommContent.setDomain(iKnowledgeInfo.getDomain());
+                if (ObjectUtils.isNotEmpty(iKnowledgeInfo.getAuthor())) {
+                    recommContent.setAuthor(iKnowledgeInfo.getAuthor());
+                }
+                if (ObjectUtils.isNotEmpty(iKnowledgeInfo.getDomain())) {
+                    recommContent.setDomain(iKnowledgeInfo.getDomain());
+                }
                 recommContent.setRelevancy(recommResult.getScore());
                 recommContent.setSource("0");
                 recommContent.setRsource(recommResult.getTags());
