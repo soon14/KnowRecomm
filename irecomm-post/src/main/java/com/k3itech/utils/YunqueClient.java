@@ -30,6 +30,7 @@ public class YunqueClient {
         request.setSenderOrgName(yunqueContent.getSenderOrgName());
         request.setBz(yunqueContent.getBz());
         request.setSenderType(yunqueContent.getSenderType());
+        request.setSourceName(yunqueContent.getSourceName());
         OpenApiRequestParamVo paramVo = new OpenApiRequestParamVo();
         paramVo.setApiUrl("/openApi/service");
         paramVo.setServiceId("AvRqvvAY");

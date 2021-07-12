@@ -50,7 +50,7 @@ public class RecommContent {
     /**
      * 备注
      */
-    private String bz;
+    private String bz="暂无可显示摘要";
 
 
 }

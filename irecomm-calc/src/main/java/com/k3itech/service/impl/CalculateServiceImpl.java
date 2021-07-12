@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSON;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
 import com.k3itech.service.CalculateService;
+import com.k3itech.service.RedisService;
 import com.k3itech.utils.Analysis;
 import com.k3itech.utils.CommonConstants;
 import com.k3itech.utils.ObjectUtils;
 import com.k3itech.vo.RecommResult;
 import com.k3itech.vo.RecommResults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,8 @@ import java.util.stream.Collectors;
 public class CalculateServiceImpl implements CalculateService {
 
 
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisService redisService;
 
     @Value("${calc.redis.timeout:8}")
     private long timeout;
@@ -100,7 +102,7 @@ public class CalculateServiceImpl implements CalculateService {
         recommResults.setRecommResults(result);
 
         String key = JSON.toJSONString(iUserFollow);
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(recommResults), timeout, TimeUnit.DAYS);
+        redisService.set(key, JSON.toJSONString(recommResults), timeout, TimeUnit.DAYS);
 
 
     }

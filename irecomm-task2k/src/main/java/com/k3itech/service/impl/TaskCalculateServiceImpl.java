@@ -9,6 +9,7 @@ import com.k3itech.irecomm.re.entity.*;
 import com.k3itech.irecomm.re.service.IIrePersonJobService;
 import com.k3itech.irecomm.re.service.IIreTagWordService;
 import com.k3itech.irecomm.re.service.IPersonPostService;
+import com.k3itech.service.RedisService;
 import com.k3itech.service.TaskCalculateService;
 import com.k3itech.utils.Analysis;
 import com.k3itech.utils.FileUtils;
@@ -44,8 +45,8 @@ import java.util.stream.Collectors;
 public class TaskCalculateServiceImpl implements TaskCalculateService {
 
 
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisService redisService;
 
     @Value("${calc.redis.timeout}")
     private long timeout;
@@ -65,7 +66,6 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
     private IIreTagWordService iiTagWordService;
 
     @Autowired
-//    private IPersonPostService iPersonPostService;
     private IIrePersonJobService iIrePersonJobService;
 
     /**
@@ -115,7 +115,7 @@ public class TaskCalculateServiceImpl implements TaskCalculateService {
         recommResults.setRecommResults(result);
 
         String key = JSON.toJSONString(taskParam);
-        redisTemplate.opsForValue().set(key, JSON.toJSONString(recommResults), timeout, TimeUnit.DAYS);
+        redisService.set(key, JSON.toJSONString(recommResults), timeout, TimeUnit.DAYS);
 
         return recommResults;
 

@@ -14,6 +14,7 @@ import com.k3itech.irecomm.re.service.IIreKnowledgeInfoService;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserFollowService;
 import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
+import com.k3itech.service.RedisService;
 import com.k3itech.service.TaskCalculateService;
 import com.k3itech.service.impl.ServerConfig;
 import com.k3itech.utils.*;
@@ -52,8 +53,7 @@ public class Task2kController {
     @Autowired
     IIreKnowledgeInfoService iIreKnowledgeInfoService;
     @Autowired
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisService redisService;
     @Autowired
     ISystemFileService iSystemFileService;
 
@@ -72,7 +72,7 @@ public class Task2kController {
     @ResponseBody
     public Object getKnowledge(TaskParam param) {
         String key = JSON.toJSONString(param);
-        String json = redisTemplate.boundValueOps(key).get();
+        String json = redisService.get(key);
         log.info("json: " + json);
         List<RecommResult> recommResultList = new ArrayList<>();
         List<KnowledgeResult> knowledgeResults = new ArrayList<>();
@@ -103,11 +103,14 @@ public class Task2kController {
             iKnowledgeInfo.setUrl(url);
             QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
             //用户反馈结果为不喜欢的
-            ireUserRecommresultQueryWrapper.like("ID_NUM", param.getUserPId()).eq("KNOWLEDGE", iKnowledgeInfo.getSourceId()).eq("ISLIKE", CommonConstants.ISLIKE_DISLIKE);
+            ireUserRecommresultQueryWrapper.like("ID_NUM", param.getUserPId()).eq("KNOWLEDGE", iKnowledgeInfo.getSourceId()).orderByDesc("UPDATE_TIME");
+            ireUserRecommresultQueryWrapper.and(  wrapper ->wrapper.eq("ISLIKE",CommonConstants.ISLIKE_DISLIKE).or().eq("ISLIKE",CommonConstants.ISLIKE_LIKE));
             List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
             if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
-                log.info(iKnowledgeInfo.getSourceId() + " user " + param.getUserPId() + " dislike");
-                continue;
+                if (ireUserRecommresults.get(0).getIslike().equalsIgnoreCase(CommonConstants.ISLIKE_DISLIKE)) {
+                    log.info(iKnowledgeInfo.getSourceId() + " user " + param.getUserPId() + " dislike");
+                    continue;
+                }
             }
 
 

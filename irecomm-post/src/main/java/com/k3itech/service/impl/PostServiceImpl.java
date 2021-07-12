@@ -3,6 +3,8 @@ package com.k3itech.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.k3itech.irecomm.caltks.entity.MetaKnowledge;
+import com.k3itech.irecomm.caltks.service.IMetaKnowledgeService;
 import com.k3itech.irecomm.re.entity.IreKnowledgeInfo;
 import com.k3itech.irecomm.re.entity.IreRecommLog;
 import com.k3itech.irecomm.re.entity.IreUserFollow;
@@ -10,6 +12,7 @@ import com.k3itech.irecomm.re.entity.IreUserRecommresult;
 import com.k3itech.irecomm.re.service.IIreRecommLogService;
 import com.k3itech.irecomm.re.service.IIreUserRecommresultService;
 import com.k3itech.service.PostService;
+import com.k3itech.service.RedisService;
 import com.k3itech.utils.*;
 import com.k3itech.vo.RecommContent;
 import com.k3itech.vo.RecommResult;
@@ -39,13 +42,16 @@ import java.util.*;
 @Service
 public class PostServiceImpl implements PostService {
     final static Integer POSTNUM = 5;
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisService redisService;
 
     @Autowired
     private IIreRecommLogService iIreRecommLogService;
     @Autowired
     private IIreUserRecommresultService iIreUserRecommresultService;
+
+    @Autowired
+    private IMetaKnowledgeService iMetaKnowledgeService;
 
     @Autowired
     private ServerConfig serverConfig;
@@ -123,7 +129,7 @@ public class PostServiceImpl implements PostService {
 
     public void setRecommresults(IreUserFollow iUserFollow, List<RecommContent> recommContents,  List<String> ids,boolean flag){
         String key = JSON.toJSONString(iUserFollow);
-        String json = redisTemplate.boundValueOps(key).get();
+        String json = redisService.get(key);
         log.info("json: " + json);
         if (ObjectUtils.isEmpty(json)) {
 
@@ -141,7 +147,8 @@ public class PostServiceImpl implements PostService {
 
                 QueryWrapper<IreUserRecommresult> ireUserRecommresultQueryWrapper = new QueryWrapper<>();
 //                用户反馈结果为不喜欢的
-                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).eq("ISLIKE",CommonConstants.ISLIKE_DISLIKE);
+                ireUserRecommresultQueryWrapper.like("ID_NUM", iUserFollow.getIdNum()).eq("KNOWLEDGE",iKnowledgeInfo.getSourceId()).orderByDesc("UPDATE_TIME");
+                ireUserRecommresultQueryWrapper.and(  wrapper ->wrapper.eq("ISLIKE",CommonConstants.ISLIKE_DISLIKE).or().eq("ISLIKE",CommonConstants.ISLIKE_LIKE));
                 List<IreUserRecommresult> ireUserRecommresults = iIreUserRecommresultService.list(ireUserRecommresultQueryWrapper);
                 if (ObjectUtils.isNotEmpty(ireRecommLogs)) {
                     log.info(iKnowledgeInfo.getSourceId() + " has posted");
@@ -149,8 +156,10 @@ public class PostServiceImpl implements PostService {
                 }
 
                 if (ObjectUtils.isNotEmpty(ireUserRecommresults)) {
-                    log.info(iKnowledgeInfo.getSourceId() + " user "+iUserFollow.getIdNum()+" dislike");
-                    continue;
+                    if (ireUserRecommresults.get(0).getIslike().equalsIgnoreCase(CommonConstants.ISLIKE_DISLIKE)) {
+                        log.info(iKnowledgeInfo.getSourceId() + " user " +iUserFollow.getIdNum() + " dislike");
+                        continue;
+                    }
                 }
                 log.debug("recommresult: " + recommResult.getInfo());
                 RecommContent recommContent = new RecommContent();
@@ -167,7 +176,9 @@ public class PostServiceImpl implements PostService {
                 recommContent.setRelevancy(recommResult.getScore());
                 recommContent.setSource("0");
                 recommContent.setRsource(recommResult.getTags());
-                recommContent.setBz(recommResult.getType());
+                if (ObjectUtils.isNotEmpty(iKnowledgeInfo.getAbstractText())) {
+                    recommContent.setBz(iKnowledgeInfo.getAbstractText());
+                }
                 recommContent.setTime(iKnowledgeInfo.getCreateTime());
 //                recommContent.setCallback(serverConfig.getUrl()+"/irecommpost/getCallback?md5id="+iKnowledgeInfo.getSourceId()+"&pid="+iUserFollow.getIdNum()+"&islike=");
                 recommContent.setCallback(PostUtils.getCallBackURL("irecommpost",serverConfig.getUrl(),iKnowledgeInfo.getSourceId(),iUserFollow.getIdNum(),""));

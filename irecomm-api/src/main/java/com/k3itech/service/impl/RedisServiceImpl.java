@@ -1,9 +1,12 @@
 package com.k3itech.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.k3itech.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,13 +19,20 @@ import java.util.concurrent.TimeUnit;
 public class RedisServiceImpl implements RedisService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private RedisTemplate redisTemplate;
+
+
+
 
     @Override
     public void set(String key, String value) {
         stringRedisTemplate.opsForValue().set(key, value);
     }
+
+    @Override
+    public void set(String key, String value, Long timeout,TimeUnit timeUnit) {
+        stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.DAYS);
+    }
+
 
     @Override
     public String get(String key) {

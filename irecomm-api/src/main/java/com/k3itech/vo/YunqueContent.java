@@ -44,7 +44,7 @@ public class YunqueContent {
      *通知来源（业务/应用名称）
      * 1
      */
-    private String sourceName;
+    private String sourceName="云雀资源";
     /**
      *来源IP
      * 2
