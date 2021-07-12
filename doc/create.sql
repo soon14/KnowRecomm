@@ -1,36 +1,33 @@
-create sequence SEQ_RECOMMLOG
-/
-
 create table ADMIN_ORG
 (
-    ID            VARCHAR2(50) not null
+    ID VARCHAR2(50) not null
         constraint SYS_C0013620
             primary key,
-    ORG_NAME      VARCHAR2(70),
-    PARENT_ID     VARCHAR2(50),
-    ORG_LEVEL     NUMBER(6),
-    ORG_SECRET    VARCHAR2(20),
+    ORG_NAME VARCHAR2(70),
+    PARENT_ID VARCHAR2(50),
+    ORG_LEVEL NUMBER(6),
+    ORG_SECRET VARCHAR2(20),
     EXTERNAL_NAME VARCHAR2(100),
-    ORDER_ID      NUMBER(10),
-    DELETED       VARCHAR2(12),
-    DESCRIPTION   VARCHAR2(255),
-    CRT_TIME      DATE          default NULL,
-    CRT_USER      VARCHAR2(255) default NULL,
-    CRT_NAME      VARCHAR2(255) default NULL,
-    CRT_HOST      VARCHAR2(255) default NULL,
-    UPD_TIME      DATE          default NULL,
-    UPD_USER      VARCHAR2(255) default NULL,
-    UPD_NAME      VARCHAR2(255) default NULL,
-    UPD_HOST      VARCHAR2(255) default NULL,
-    ATTR1         VARCHAR2(255) default NULL,
-    ATTR2         VARCHAR2(255) default NULL,
-    ATTR3         VARCHAR2(255) default NULL,
-    ATTR4         VARCHAR2(255) default NULL,
-    ORG_CODE      VARCHAR2(50),
-    PATH_CODE     VARCHAR2(1000),
-    PATH_NAME     VARCHAR2(1000),
-    LAST_TIME     TIMESTAMP(6),
-    ISDEL         NUMBER
+    ORDER_ID NUMBER(10),
+    DELETED VARCHAR2(12),
+    DESCRIPTION VARCHAR2(255),
+    CRT_TIME DATE default NULL,
+    CRT_USER VARCHAR2(255) default NULL,
+    CRT_NAME VARCHAR2(255) default NULL,
+    CRT_HOST VARCHAR2(255) default NULL,
+    UPD_TIME DATE default NULL,
+    UPD_USER VARCHAR2(255) default NULL,
+    UPD_NAME VARCHAR2(255) default NULL,
+    UPD_HOST VARCHAR2(255) default NULL,
+    ATTR1 VARCHAR2(255) default NULL,
+    ATTR2 VARCHAR2(255) default NULL,
+    ATTR3 VARCHAR2(255) default NULL,
+    ATTR4 VARCHAR2(255) default NULL,
+    ORG_CODE VARCHAR2(50),
+    PATH_CODE VARCHAR2(1000),
+    PATH_NAME VARCHAR2(1000),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -75,46 +72,46 @@ comment on column ADMIN_ORG.ISDEL is '删除标志'
 
 create table ADMIN_USER
 (
-    ID           VARCHAR2(50) not null
+    ID VARCHAR2(50) not null
         constraint SYS_C0013651
             primary key,
-    NAME         VARCHAR2(255),
-    P_ID         VARCHAR2(30),
-    ORG_CODE     VARCHAR2(50),
-    ORG_NAME     VARCHAR2(50),
+    NAME VARCHAR2(255),
+    P_ID VARCHAR2(30),
+    ORG_CODE VARCHAR2(50),
+    ORG_NAME VARCHAR2(50),
     SECRET_LEVEL VARCHAR2(12),
-    GENDER       VARCHAR2(50),
-    ORDER_ID     NUMBER(10),
-    EMP_CODE     VARCHAR2(20),
-    BIRTH_DATE   DATE,
-    O_TEL        VARCHAR2(12),
-    O_EMAIL      VARCHAR2(128),
-    WORK_POST    VARCHAR2(50),
-    TEC_POST     VARCHAR2(50),
-    DELETED      VARCHAR2(12),
-    REFA         VARCHAR2(50),
-    REFB         VARCHAR2(50),
-    AVATAR       VARCHAR2(255),
-    DESCRIPTION  VARCHAR2(255),
-    CRT_TIME     DATE          default NULL,
-    CRT_USER     VARCHAR2(255) default NULL,
-    CRT_NAME     VARCHAR2(255) default NULL,
-    CRT_HOST     VARCHAR2(255) default NULL,
-    UPD_TIME     DATE          default NULL,
-    UPD_USER     VARCHAR2(255) default NULL,
-    UPD_NAME     VARCHAR2(255) default NULL,
-    UPD_HOST     VARCHAR2(255) default NULL,
-    ATTR1        VARCHAR2(255) default NULL,
-    ATTR2        VARCHAR2(255) default NULL,
-    ATTR3        VARCHAR2(255) default NULL,
-    ATTR4        VARCHAR2(255) default NULL,
-    PASSWORD     VARCHAR2(255),
-    ATTR5        VARCHAR2(255),
-    ATTR6        VARCHAR2(255),
-    ATTR7        VARCHAR2(255),
-    ATTR8        VARCHAR2(255),
-    LAST_TIME    TIMESTAMP(6),
-    ISDEL        NUMBER
+    GENDER VARCHAR2(50),
+    ORDER_ID NUMBER(10),
+    EMP_CODE VARCHAR2(20),
+    BIRTH_DATE DATE,
+    O_TEL VARCHAR2(12),
+    O_EMAIL VARCHAR2(128),
+    WORK_POST VARCHAR2(50),
+    TEC_POST VARCHAR2(50),
+    DELETED VARCHAR2(12),
+    REFA VARCHAR2(50),
+    REFB VARCHAR2(50),
+    AVATAR VARCHAR2(255),
+    DESCRIPTION VARCHAR2(255),
+    CRT_TIME DATE default NULL,
+    CRT_USER VARCHAR2(255) default NULL,
+    CRT_NAME VARCHAR2(255) default NULL,
+    CRT_HOST VARCHAR2(255) default NULL,
+    UPD_TIME DATE default NULL,
+    UPD_USER VARCHAR2(255) default NULL,
+    UPD_NAME VARCHAR2(255) default NULL,
+    UPD_HOST VARCHAR2(255) default NULL,
+    ATTR1 VARCHAR2(255) default NULL,
+    ATTR2 VARCHAR2(255) default NULL,
+    ATTR3 VARCHAR2(255) default NULL,
+    ATTR4 VARCHAR2(255) default NULL,
+    PASSWORD VARCHAR2(255),
+    ATTR5 VARCHAR2(255),
+    ATTR6 VARCHAR2(255),
+    ATTR7 VARCHAR2(255),
+    ATTR8 VARCHAR2(255),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -186,26 +183,26 @@ comment on column ADMIN_USER.ISDEL is '删除标志'
 
 create table ADMIN_GATELOG
 (
-    ID         VARCHAR2(50) not null
+    ID VARCHAR2(50) not null
         constraint SYS_C0013597
             primary key,
-    MENU       VARCHAR2(255) default NULL,
-    OPT        VARCHAR2(255) default NULL,
-    URI        VARCHAR2(255) default NULL,
-    CRT_TIME   DATE          default NULL,
-    CRT_USER   VARCHAR2(255) default NULL,
-    CRT_NAME   VARCHAR2(255) default NULL,
-    CRT_HOST   VARCHAR2(255) default NULL,
+    MENU VARCHAR2(255) default NULL,
+    OPT VARCHAR2(255) default NULL,
+    URI VARCHAR2(255) default NULL,
+    CRT_TIME DATE default NULL,
+    CRT_USER VARCHAR2(255) default NULL,
+    CRT_NAME VARCHAR2(255) default NULL,
+    CRT_HOST VARCHAR2(255) default NULL,
     IS_SUCCESS CHAR,
-    P_ID       VARCHAR2(256),
+    P_ID VARCHAR2(256),
     LOG_DETAIL VARCHAR2(4000),
-    OPT_INFO   CLOB,
-    ORG_NAME   VARCHAR2(100),
-    ORG_CODE   VARCHAR2(100),
-    PATH_CODE  VARCHAR2(1000),
-    PATH_NAME  VARCHAR2(1000),
-    LAST_TIME  TIMESTAMP(6),
-    ISDEL      NUMBER
+    OPT_INFO CLOB,
+    ORG_NAME VARCHAR2(100),
+    ORG_CODE VARCHAR2(100),
+    PATH_CODE VARCHAR2(1000),
+    PATH_NAME VARCHAR2(1000),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -247,27 +244,27 @@ comment on column ADMIN_GATELOG.ISDEL is '删除标志'
 
 create table CALTKS_DK_ZHILIANGWENTIANLI
 (
-    ID                  NUMBER(19) not null
+    ID NUMBER(19) not null
         constraint CALTKS_DK_ZHILIANGWENTIANLI_PK
             primary key,
-    XINGHAOMINGCHENG    VARCHAR2(200 char),
-    XINGHAOLEIBIE       VARCHAR2(200 char),
-    CHANPINDAIHAO       VARCHAR2(200 char),
-    CHANPINBIANHAO      VARCHAR2(200 char),
-    CHANPINMINGCHENG    VARCHAR2(200 char),
-    SUOSHUFENXITONG     VARCHAR2(200 char),
-    GUZHANGSHIJIAN      VARCHAR2(200 char),
-    GONGZUOJIEDUAN      VARCHAR2(200 char),
-    GUZHANGGAISHU       VARCHAR2(3000 char),
-    YUANYINFENXI        VARCHAR2(3000 char),
-    YUANYINFENLEI       VARCHAR2(3000 char),
-    YUANYINFENLEI2      VARCHAR2(200 char),
-    PICIXINGWENTI       VARCHAR2(200 char),
-    JIUZHENGCUOSHI      VARCHAR2(3000 char),
+    XINGHAOMINGCHENG VARCHAR2(200 char),
+    XINGHAOLEIBIE VARCHAR2(200 char),
+    CHANPINDAIHAO VARCHAR2(200 char),
+    CHANPINBIANHAO VARCHAR2(200 char),
+    CHANPINMINGCHENG VARCHAR2(200 char),
+    SUOSHUFENXITONG VARCHAR2(200 char),
+    GUZHANGSHIJIAN VARCHAR2(200 char),
+    GONGZUOJIEDUAN VARCHAR2(200 char),
+    GUZHANGGAISHU VARCHAR2(3000 char),
+    YUANYINFENXI VARCHAR2(3000 char),
+    YUANYINFENLEI VARCHAR2(3000 char),
+    YUANYINFENLEI2 VARCHAR2(200 char),
+    PICIXINGWENTI VARCHAR2(200 char),
+    JIUZHENGCUOSHI VARCHAR2(3000 char),
     WAIXIEGUANLIYUANYIN VARCHAR2(3000 char),
-    JIAFANGGUANLI       VARCHAR2(3000 char),
-    LAST_TIME           TIMESTAMP(6),
-    ISDEL               NUMBER
+    JIAFANGGUANLI VARCHAR2(3000 char),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -282,15 +279,15 @@ comment on column CALTKS_DK_ZHILIANGWENTIANLI.ISDEL is '删除标志'
 
 create table CALTKS_SYSTEM_FILE
 (
-    ID          NUMBER(19) not null
+    ID NUMBER(19) not null
         constraint CALTKS_SYSTEM_FILE_PK
             primary key,
-    FILE_NAME   VARCHAR2(255 char),
-    FILE_TYPE   VARCHAR2(255 char),
+    FILE_NAME VARCHAR2(255 char),
+    FILE_TYPE VARCHAR2(255 char),
     FILE_BINARY BLOB,
-    SAVE_DATE   TIMESTAMP(6),
-    LAST_TIME   TIMESTAMP(6),
-    ISDEL       NUMBER
+    SAVE_DATE TIMESTAMP(6),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -305,24 +302,24 @@ comment on column CALTKS_SYSTEM_FILE.ISDEL is '删除标志'
 
 create table CALTKS_META_KNOWLEDGE
 (
-    ID                         NUMBER(19) not null,
-    ABSTRACT_TEXT              VARCHAR2(3000 char),
-    SECURITY_LEVEL             VARCHAR2(255 char),
+    ID NUMBER(19) not null,
+    ABSTRACT_TEXT VARCHAR2(3000 char),
+    SECURITY_LEVEL VARCHAR2(255 char),
     KNOWLEDGE_SOURCE_FILE_PATH VARCHAR2(255 char),
-    KTYPEID                    NUMBER(19) not null,
-    DOMAIN_NODEID              NUMBER(19),
-    UPLOAD_TIME                TIMESTAMP(6),
-    UPLOADERID                 NUMBER(19) not null,
-    IS_VISIBLE                 NUMBER(1),
-    STATUS                     VARCHAR2(255 char),
-    IDENTIFIER                 VARCHAR2(255 char),
-    FLASH_FILE_PATH            VARCHAR2(255 char),
-    TITLE_NAME                 VARCHAR2(255 char),
-    VERID                      NUMBER(19) not null,
-    COMMENTRECORDID            NUMBER(19),
-    KNOWLEDGETYPE_ID           NUMBER(19),
-    LAST_TIME                  TIMESTAMP(6),
-    ISDEL                      NUMBER
+    KTYPEID NUMBER(19) not null,
+    DOMAIN_NODEID NUMBER(19),
+    UPLOAD_TIME TIMESTAMP(6),
+    UPLOADERID NUMBER(19) not null,
+    IS_VISIBLE NUMBER(1),
+    STATUS VARCHAR2(255 char),
+    IDENTIFIER VARCHAR2(255 char),
+    FLASH_FILE_PATH VARCHAR2(255 char),
+    TITLE_NAME VARCHAR2(255 char),
+    VERID NUMBER(19) not null,
+    COMMENTRECORDID NUMBER(19),
+    KNOWLEDGETYPE_ID NUMBER(19),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -337,24 +334,24 @@ comment on column CALTKS_META_KNOWLEDGE.ISDEL is '删除标志'
 
 create table IRE_KNOWLEDGE_INFO
 (
-    ID               VARCHAR2(255) not null
+    ID VARCHAR2(255) not null
         constraint I_KOWLEDGE_INFO_PK
             primary key,
-    TITLE            VARCHAR2(255),
-    CREATE_TIME      TIMESTAMP(6),
-    AUTHOR           VARCHAR2(255),
-    SECURITY_LEVEL   VARCHAR2(255),
-    ABSTRACT_TEXT    VARCHAR2(3000),
-    ORG              VARCHAR2(255),
-    KTYPE            VARCHAR2(255),
-    TAG_MODEL        VARCHAR2(255),
+    TITLE VARCHAR2(255),
+    CREATE_TIME TIMESTAMP(6),
+    AUTHOR VARCHAR2(255),
+    SECURITY_LEVEL VARCHAR2(255),
+    ABSTRACT_TEXT VARCHAR2(3000),
+    ORG VARCHAR2(255),
+    KTYPE VARCHAR2(255),
+    TAG_MODEL VARCHAR2(255),
     KNOWLEDGE_SOURCE VARCHAR2(255),
-    TAG_KEYWORDS     VARCHAR2(3000),
-    TAG_DEVICE       VARCHAR2(255),
-    SOURCE_ID        VARCHAR2(255),
-    URL              VARCHAR2(255),
-    DOMAIN           VARCHAR2(255),
-    LAST_TIME        TIMESTAMP(6)
+    TAG_KEYWORDS VARCHAR2(3000),
+    TAG_DEVICE VARCHAR2(255),
+    SOURCE_ID VARCHAR2(255),
+    URL VARCHAR2(255),
+    DOMAIN VARCHAR2(255),
+    LAST_TIME TIMESTAMP(6)
 )
 /
 
@@ -408,12 +405,12 @@ comment on column IRE_KNOWLEDGE_INFO.LAST_TIME is '更新时间'
 
 create table IRE_USER_ACTION
 (
-    ID_NUM         VARCHAR2(255) not null
+    ID_NUM VARCHAR2(255) not null
         constraint I_USER_ACTION_PK
             primary key,
-    OPERATE_TYPE   VARCHAR2(255),
+    OPERATE_TYPE VARCHAR2(255),
     OPERATE_OBJECT VARCHAR2(255),
-    OPERATE_TIME   TIMESTAMP(6)
+    OPERATE_TIME TIMESTAMP(6)
 )
 /
 
@@ -431,19 +428,19 @@ comment on column IRE_USER_ACTION.OPERATE_TIME is '操作时间'
 
 create table IRE_USER_FOLLOW
 (
-    ID_NUM        VARCHAR2(255) not null
+    ID_NUM VARCHAR2(255) not null
         constraint I_USER_FOLLOW_PK
             primary key,
-    USER_NAME     VARCHAR2(255),
-    POST          VARCHAR2(255),
-    USER_JOB      VARCHAR2(255),
-    FOLLOW_MODEL  VARCHAR2(3000),
+    USER_NAME VARCHAR2(255),
+    POST VARCHAR2(255),
+    USER_JOB VARCHAR2(255),
+    FOLLOW_MODEL VARCHAR2(3000),
     FOLLOW_DEVICE VARCHAR2(3000),
-    FOLLOW_PRO    VARCHAR2(3000),
-    SECRET_LEVEL  VARCHAR2(12),
-    ORG_CODE      VARCHAR2(50),
-    ORG_NAME      VARCHAR2(50),
-    LAST_TIME     TIMESTAMP(6)
+    FOLLOW_PRO VARCHAR2(3000),
+    SECRET_LEVEL VARCHAR2(12),
+    ORG_CODE VARCHAR2(50),
+    ORG_NAME VARCHAR2(50),
+    LAST_TIME TIMESTAMP(6)
 )
 /
 
@@ -482,12 +479,12 @@ comment on column IRE_USER_FOLLOW.LAST_TIME is '更新时间'
 
 create table IRE_USER_INFO
 (
-    ID_NUM    VARCHAR2(255) not null
+    ID_NUM VARCHAR2(255) not null
         constraint I_USER_INFO_PK
             primary key,
     USER_NAME VARCHAR2(255),
-    POST      VARCHAR2(255),
-    USER_JOB  VARCHAR2(255)
+    POST VARCHAR2(255),
+    USER_JOB VARCHAR2(255)
 )
 /
 
@@ -506,57 +503,34 @@ comment on column IRE_USER_INFO.POST is '岗位'
 comment on column IRE_USER_INFO.USER_JOB is '职务'
 /
 
-create table IRE_USER_RECOMMRESULT
-(
-	ID NUMBER not null
-		constraint IRE_USER_RECOMMRESULT_PK
-			primary key,
-	ID_NUM VARCHAR2(255),
-	KNOWLEDGE VARCHAR2(255),
-	ISLIKE VARCHAR2(8),
-	UPDATE_TIME TIMESTAMP(6)
-)
-/
-
-comment on column IRE_USER_RECOMMRESULT.ID_NUM is '用户证件号'
-/
-
-comment on column IRE_USER_RECOMMRESULT.KNOWLEDGE is '知识'
-/
-
-comment on column IRE_USER_RECOMMRESULT.ISLIKE is '用户喜好程度'
-/
-
-
-
 create table ZZ_MESSAGE_INFO
 (
-    MSG_ID          VARCHAR2(40) not null
+    MSG_ID VARCHAR2(40) not null
         primary key,
-    SENDER          VARCHAR2(40),
-    RECEIVER        VARCHAR2(40),
-    CREATETIME      DATE,
-    LEVELS          VARCHAR2(20),
-    CONTENT         VARCHAR2(3000),
-    TYPE            VARCHAR2(20),
-    ORG_CODE        VARCHAR2(40),
-    ORG_NAME        VARCHAR2(200),
-    SENDER_SN       VARCHAR2(40),
-    ISCROSS         VARCHAR2(20),
-    IP              VARCHAR2(60),
-    FILE_TYPE       VARCHAR2(4),
-    MSG             VARCHAR2(900),
-    FILE_ID         VARCHAR2(40),
-    FRONT_ID        VARCHAR2(60),
-    SENDER_NAME     VARCHAR2(300),
-    RECEIVER_NAME   VARCHAR2(300),
-    SENDER_AVATAR   VARCHAR2(600),
+    SENDER VARCHAR2(40),
+    RECEIVER VARCHAR2(40),
+    CREATETIME DATE,
+    LEVELS VARCHAR2(20),
+    CONTENT VARCHAR2(3000),
+    TYPE VARCHAR2(20),
+    ORG_CODE VARCHAR2(40),
+    ORG_NAME VARCHAR2(200),
+    SENDER_SN VARCHAR2(40),
+    ISCROSS VARCHAR2(20),
+    IP VARCHAR2(60),
+    FILE_TYPE VARCHAR2(4),
+    MSG VARCHAR2(900),
+    FILE_ID VARCHAR2(40),
+    FRONT_ID VARCHAR2(60),
+    SENDER_NAME VARCHAR2(300),
+    RECEIVER_NAME VARCHAR2(300),
+    SENDER_AVATAR VARCHAR2(600),
     RECEIVER_AVATAR VARCHAR2(600),
-    SENDER_LEVELS   VARCHAR2(20),
-    CANCEL          VARCHAR2(10),
-    CANCEL_TIME     DATE,
-    LAST_TIME       TIMESTAMP(6),
-    ISDEL           NUMBER
+    SENDER_LEVELS VARCHAR2(20),
+    CANCEL VARCHAR2(10),
+    CANCEL_TIME DATE,
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
@@ -614,16 +588,12 @@ comment on column ZZ_MESSAGE_INFO.LAST_TIME is '数据抽取时间'
 comment on column ZZ_MESSAGE_INFO.ISDEL is '删除标志'
 /
 
-
-
-
-
 create table IRE_RECOMM_LOG
 (
     ID NUMBER(20) not null
         constraint I_RECOMM_LOG_PK
             primary key,
-    ID_NUM VARCHAR2(20),
+    ID_NUM VARCHAR2(3000),
     KNOWLEDGE VARCHAR2(255),
     POST_TIME TIMESTAMP(6),
     KTYPE VARCHAR2(255),
@@ -631,7 +601,10 @@ create table IRE_RECOMM_LOG
 )
 /
 
-comment on column IRE_RECOMM_LOG.ID_NUM is '设分支'
+comment on table IRE_RECOMM_LOG is '推荐记录'
+/
+
+comment on column IRE_RECOMM_LOG.ID_NUM is '证件号'
 /
 
 comment on column IRE_RECOMM_LOG.KNOWLEDGE is '知识ids'
@@ -643,10 +616,9 @@ comment on column IRE_RECOMM_LOG.POST_TIME is '推送时间'
 comment on column IRE_RECOMM_LOG.STATUS is '状态0成功，1失败'
 /
 
-
 create table ETL_TEMP
 (
-    ID           VARCHAR2(50 char) not null
+    ID VARCHAR2(50 char) not null
         primary key,
     EXTRACT_TIME TIMESTAMP(6)
 )
@@ -658,15 +630,39 @@ comment on column ETL_TEMP.ID is '表名'
 comment on column ETL_TEMP.EXTRACT_TIME is '抽取时间'
 /
 
-
+create table CALTKS_DK_FROM
+(
+    ID NUMBER(19) not null
+        constraint CALTKS_DK_FROM_PK
+            primary key,
+    XINGHAOMINGCHENG VARCHAR2(200 char),
+    XINGHAOLEIBIE VARCHAR2(200 char),
+    CHANPINDAIHAO VARCHAR2(200 char),
+    CHANPINBIANHAO VARCHAR2(200 char),
+    CHANPINMINGCHENG VARCHAR2(200 char),
+    SUOSHUFENXITONG VARCHAR2(200 char),
+    GUZHANGSHIJIAN VARCHAR2(200 char),
+    GONGZUOJIEDUAN VARCHAR2(200 char),
+    GUZHANGGAISHU VARCHAR2(3000 char),
+    YUANYINFENXI VARCHAR2(3000 char),
+    YUANYINFENLEI VARCHAR2(3000 char),
+    YUANYINFENLEI2 VARCHAR2(200 char),
+    PICIXINGWENTI VARCHAR2(200 char),
+    JIUZHENGCUOSHI VARCHAR2(3000 char),
+    WAIXIEGUANLIYUANYIN VARCHAR2(3000 char),
+    JIAFANGGUANLI VARCHAR2(3000 char),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
+)
+/
 
 create table PERSON_POST
 (
     IDENTITY_NO VARCHAR2(100) not null
         constraint USER_POST_PK
             primary key,
-    VDEFL       VARCHAR2(100),
-    CRT_TIME    TIMESTAMP(6) default current_timestamp
+    VDEFL VARCHAR2(100),
+    CRT_TIME TIMESTAMP(6) default current_timestamp
 )
 /
 
@@ -678,34 +674,33 @@ comment on column PERSON_POST.VDEFL is '岗位'
 
 create table CALTKS_TREE_NODE
 (
-    ID               NUMBER(19)        not null
+    ID NUMBER(19) not null
         primary key,
-    TREE_NODE_TYPE   VARCHAR2(50 char) not null,
+    TREE_NODE_TYPE VARCHAR2(50 char) not null,
     NODE_DESCRIPTION VARCHAR2(255 char),
-    CODE             VARCHAR2(255 char),
-    NODE_NAME        VARCHAR2(255 char),
-    PARENT_ID        NUMBER(19),
-    ORDER_ID         NUMBER(19),
-    ORG_CODE         VARCHAR2(200 char),
-    PATH_CODE        VARCHAR2(300 char),
-    PATH_NAME        VARCHAR2(300 char),
-    ORG_SECRET       VARCHAR2(200 char),
-    EXTERNAL_NAME    VARCHAR2(300 char),
-    DESCRIPTION      VARCHAR2(300 char),
-    PARENT_CODE      VARCHAR2(300 char),
-    ORG_LEVEL        NUMBER(19),
-    LAST_TIME        TIMESTAMP(6),
-    ISDEL            NUMBER
+    CODE VARCHAR2(255 char),
+    NODE_NAME VARCHAR2(255 char),
+    PARENT_ID NUMBER(19),
+    ORDER_ID NUMBER(19),
+    ORG_CODE VARCHAR2(200 char),
+    PATH_CODE VARCHAR2(300 char),
+    PATH_NAME VARCHAR2(300 char),
+    ORG_SECRET VARCHAR2(200 char),
+    EXTERNAL_NAME VARCHAR2(300 char),
+    DESCRIPTION VARCHAR2(300 char),
+    PARENT_CODE VARCHAR2(300 char),
+    ORG_LEVEL NUMBER(19),
+    LAST_TIME TIMESTAMP(6),
+    ISDEL NUMBER
 )
 /
 
 comment on column CALTKS_TREE_NODE.ISDEL is '删除标志'
 /
 
-
 create table IRE_TAG_WORD
 (
-    WORD     VARCHAR2(255) not null
+    WORD VARCHAR2(255) not null
         constraint IRE_TAG_WORD_PK
             primary key,
     TAG_TYPE VARCHAR2(255)
@@ -718,6 +713,27 @@ comment on column IRE_TAG_WORD.WORD is '词语'
 comment on column IRE_TAG_WORD.TAG_TYPE is '词语类型（型号、设备分系统、阶段、领域、军兵种、指标、专业方向等）'
 /
 
+create table IRE_USER_RECOMMRESULT
+(
+    ID NUMBER not null
+        constraint IRE_USER_RECOMMRESULT_PK
+            primary key,
+    ID_NUM VARCHAR2(3000),
+    KNOWLEDGE VARCHAR2(255),
+    ISLIKE VARCHAR2(8),
+    UPDATE_TIME TIMESTAMP(6)
+)
+/
+
+comment on column IRE_USER_RECOMMRESULT.ID_NUM is '用户证件号'
+/
+
+comment on column IRE_USER_RECOMMRESULT.KNOWLEDGE is '知识'
+/
+
+comment on column IRE_USER_RECOMMRESULT.ISLIKE is '用户喜好程度，1喜欢，2不喜欢，3点击'
+/
+
 create table IRE_PERSON_JOB
 (
     ID_NUM VARCHAR2(20) not null
@@ -726,7 +742,7 @@ create table IRE_PERSON_JOB
     NAME VARCHAR2(255),
     ORG_CODE VARCHAR2(255),
     TYPE VARCHAR2(255),
-    PROFFESSION VARCHAR2(255),
+    PROFFESSIONAL VARCHAR2(255),
     DIRECTION VARCHAR2(255)
 )
 /
@@ -743,7 +759,7 @@ comment on column IRE_PERSON_JOB.ORG_CODE is '组织'
 comment on column IRE_PERSON_JOB.TYPE is '类别'
 /
 
-comment on column IRE_PERSON_JOB.PROFFESSION is '专业'
+comment on column IRE_PERSON_JOB.PROFFESSIONAL is '专业'
 /
 
 comment on column IRE_PERSON_JOB.DIRECTION is '方向'
@@ -791,6 +807,8 @@ comment on column IRE_TAG_STRUCTURE.LEAF is '是否叶子节点（0根节点，1
 
 comment on column IRE_TAG_STRUCTURE.GRADE is '级别'
 /
+
+
 
 create sequence SEQ_RECOMMRESULT
     minvalue 1
