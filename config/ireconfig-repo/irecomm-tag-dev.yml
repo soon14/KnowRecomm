@@ -62,3 +62,14 @@ calc:
 #用户自定义词典路径
 userdict:
   path:
+
+logging:
+  pattern:
+    file: "irecomm-tag-log.%d{yyyy-MM-dd}.log"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  path: "./logs"
+    file:
+      max-history: 30
+      max-size: 10MB
+  level:
+    root: info

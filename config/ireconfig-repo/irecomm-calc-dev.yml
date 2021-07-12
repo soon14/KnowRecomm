@@ -62,3 +62,13 @@ calc:
   #redis计算结果保存时间
   redis:
     timeout: 7
+logging:
+  pattern:
+    file: "irecomm-calc-log.%d{yyyy-MM-dd}.log"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  path: "./logs"
+    file:
+      max-history: 30
+      max-size: 10MB
+  level:
+    root: info
