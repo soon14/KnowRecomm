@@ -26,7 +26,7 @@ public class RecommContent {
     /**
      * 内容来源（0知识，1PDM，2TDM，3其他）
      */
-    private String source;
+    private String source="知识管理系统";
     /**
      * 作者
      */

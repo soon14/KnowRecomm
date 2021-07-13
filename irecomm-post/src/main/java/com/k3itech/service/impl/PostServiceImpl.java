@@ -174,7 +174,7 @@ public class PostServiceImpl implements PostService {
                     recommContent.setDomain(iKnowledgeInfo.getDomain());
                 }
                 recommContent.setRelevancy(recommResult.getScore());
-                recommContent.setSource("0");
+                recommContent.setSource("知识管理系统");
                 recommContent.setRsource(recommResult.getTags());
                 if (ObjectUtils.isNotEmpty(iKnowledgeInfo.getAbstractText())) {
                     recommContent.setBz(iKnowledgeInfo.getAbstractText());
